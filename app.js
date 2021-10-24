@@ -6,7 +6,7 @@ app.set("view engine","ejs");
 app.use(express.static("public"));
 
 app.listen(PORT,function(){
-    console.log("Server Started at port 5000");
+    console.log(`Server Started at port ${PORT}`);
 })
 
 app.get("/",function(req,res){

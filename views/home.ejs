@@ -2,17 +2,16 @@
 <link rel="stylesheet" href="css/home.css">
 
     <!-- Hero Section -->
-    <!-- component -->
-    <section class="pt-24 md:pt-52 bg-white">
+    <section class="pt-24 lg:pt-52 bg-white">
         <div class="px-12 mx-auto max-w-7xl">
             <div class="w-full mx-auto text-left md:w-11/12 xl:w-9/12 md:text-center">
                 <h1
-                    class="mb-8 text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl md:tracking-tight">
+                    class="mb-8 text-4xl font-bold leading-none tracking-normal text-gray-600 md:text-5xl lg:text-6xl md:tracking-tight">
                     <span>Most</span> <span
                         class="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-purple-500 lg:inline">affordable</span>
                     and <span
                         class="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-purple-500 lg:inline">unlimited</span>
-                    <span class="">graphics team is here 🚀</span>
+                    <span class="">graphics team is here</span>
                 </h1>
                 <p class="px-0 mb-8 text-lg text-gray-600 md:text-xl lg:px-24">
                     Start gaining the traction you've always wanted with our next-level templates and designs. Crafted
@@ -400,9 +399,21 @@
 
     <!-- How it works section -->
     <section class=" pt-12 mt-6">
-        <div>
-            <h1 class="text-center text-3xl font-semibold text-black">How Monkeysingh works</h1>
-        </div>
+        <div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center">
+            <div class="w-full bg-white border-b border-gray-200 px-5 py-12 text-gray-800">
+                <div class="w-full max-w-6xl mx-auto">
+                    <!-- title carousal  -->
+                    <div class="text-center max-w-xl mx-auto">
+                        <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">How Monkeysingh works.</h1>
+                        <h3 class="text-xl mb-5 font-light">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
+                        <div class="text-center mb-10">
+                            <span class="inline-block w-1 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                            <span class="inline-block w-3 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                            <span class="inline-block w-40 h-1 rounded-full bg-indigo-500"></span>
+                            <span class="inline-block w-3 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                            <span class="inline-block w-1 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                        </div>
+                    </div>
         <div class="mx-4 md:mx-8 grid grid-cols-1 md:grid-cols-3">
             <div class="m-12">
                 <div class="flex justify-center"><img src="img/undraw_Working_from_anywhere_re_9obt.svg" alt=""
@@ -442,61 +453,56 @@
         </div>
     </section>
 
-    <!-- work showcase Card slider -->
-    <section class="pt-6 md:pt-12">
-        <!-- intro section -->
-        <div class="text-left md:text-center px-8 mx-auto ">
-            <div class="" style="">
-                <h2 class="text-2xl font-semibold leading-md my-4">A designer for any and every job</h2>
-                <p class="font-medium text-lg">Whether it’s a new logo, marketing materials, advertisements, or website/app design, there's always a qualified designer for the job.
-                </p>
-                <p class="font-medium text-lg">Whether it’s a new logo, marketing materials, advertisements, or website/app design, there's always a qualified designer for the job.
-                </p>
-                <div class="mt-8">
-                    <button class="text-blue-500 border-2 border-blue-500 px-6 py-3 hover:bg-purple-500 hover:text-white text-lg rounded">See our Work
-                    </button>
+
+    <!-- portfolio section  -->
+    <div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center">
+        <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-16 md:py-24 text-gray-800">
+            <div class="w-full max-w-6xl mx-auto">
+                <!-- title carousal  -->
+                <div class="text-center max-w-xl mx-auto">
+                    <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">Our works.</h1>
+                    <h3 class="text-xl mb-5 font-light">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
+                    <div class="text-center mb-10">
+                        <span class="inline-block w-1 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                        <span class="inline-block w-3 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                        <span class="inline-block w-40 h-1 rounded-full bg-indigo-500"></span>
+                        <span class="inline-block w-3 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                        <span class="inline-block w-1 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                    </div>
+                </div>
+                <!-- image carousal  -->
+                <div class="flex flex-col mt-24" data-controller="slider">
+                    <!-- <h1 class="text-3xl text-gray-900 text-center mb-4"></h1> -->
+                    <div class="flex overflow-x-scroll" data-slider-target="scrollContainer">
+                      <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
+                        <img class="rounded-md" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
+                        <div class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2"><a href="">Logo</a></div>
+                      </div>
+                      <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
+                        <img class="rounded-md" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
+                        <div class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2"><a href="">Poster</a></div>
+                      </div>
+                      <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
+                        <img class="rounded-md" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
+                        <div class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2"><a href="">Poster</a></div>
+                      </div>
+                      <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
+                        <img class="rounded-md" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
+                        <div class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2"><a href="">Poster</a></div>
+                      </div>
+                      <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
+                        <img class="rounded-md" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
+                        <div class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2"><a href="">Poster</a></div>
+                      </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- image cards -->
-        <div class="flex flex-col mt-24" data-controller="slider">
-            <h1 class="text-3xl text-gray-900 text-center mb-4">Our Work</h1>
-            <div class="flex overflow-x-scroll" data-slider-target="scrollContainer">
-              <div class="w-96 h-64 px-4 flex-shrink-0" data-slider-target="image" id="1">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-              </div>
-              <div class="w-96 h-64 px-4 flex-shrink-0" data-slider-target="image" id="2">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-              </div>
-              <div class="w-96 h-64 px-4 flex-shrink-0" data-slider-target="image" id="3">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-              </div>
-              <div class="w-96 h-64 px-4 flex-shrink-0" data-slider-target="image" id="4">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-              </div>
-              <div class="w-96 h-64 px-4 flex-shrink-0" data-slider-target="image" id="5">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-              </div>
-              <div class="w-96 h-64 px-4 flex-shrink-0" data-slider-target="image" id="6">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-              </div>
-            </div>
-            <div class="flex mx-auto my-8">
-              <ul class="flex justify-center">
-                <li class="h-6 w-6 rounded-full mx-2 cursor-pointer bg-gray-500" data-slider-target="indicator" data-image-id="1" data-action="click->slider#scrollTo"></li>
-                <li class="h-6 w-6 rounded-full mx-2 cursor-pointer bg-gray-500" data-slider-target="indicator" data-image-id="2" data-action="click->slider#scrollTo"></li>
-                <li class="h-6 w-6 rounded-full mx-2 cursor-pointer bg-gray-500" data-slider-target="indicator" data-image-id="3" data-action="click->slider#scrollTo"></li>
-                <li class="h-6 w-6 rounded-full mx-2 cursor-pointer bg-gray-500" data-slider-target="indicator" data-image-id="4" data-action="click->slider#scrollTo"></li>
-                <li class="h-6 w-6 rounded-full mx-2 cursor-pointer bg-gray-500" data-slider-target="indicator" data-image-id="5" data-action="click->slider#scrollTo"></li>
-                <li class="h-6 w-6 rounded-full mx-2 cursor-pointer bg-gray-500" data-slider-target="indicator" data-image-id="6" data-action="click->slider#scrollTo"></li>
-              </ul>
-            </div>
-          </div>
-    </section>
+    </div>
 
     <!-- testimonial section -->
-    <div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center py-5">
-    <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-16 md:py-24 text-gray-800">
+    <div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center">
+    <div class="w-full bg-white border-t border-b border-gray-200 px-5 pt-16 pb-16 md:pt-24 text-gray-800">
         <div class="w-full max-w-6xl mx-auto">
             <div class="text-center max-w-xl mx-auto">
                 <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">What people <br>are saying.</h1>
