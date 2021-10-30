@@ -1,38 +1,24 @@
-  (() => {
-    const application = Stimulus.Application.start()
+  // Tabs feature 
+  document.getElementById("graphicsTabContent").style.display = "block";
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
   
-    application.register("slider", class extends Stimulus.Controller {
-      static get targets() {
-        return [ "scrollContainer", "image", "indicator" ]
-      }
-      initialize() {
-        this.observer = new IntersectionObserver(this.onIntersectionObserved.bind(this), {
-          root: this.scrollContainerTarget,
-          threshold: 0.5
-        })
-        this.imageTargets.forEach(image => {
-          this.observer.observe(image)
-        })
-      }
-
-      scrollTo() {
-        const imageId = event.target.dataset.imageId
-        const imageElement = document.getElementById(imageId)
-        const imageCoordinates = imageElement.getBoundingClientRect()
-        this.scrollContainerTarget.scrollTo({ left: (this.scrollContainerTarget.scrollLeft + imageCoordinates.left), top: false, behavior: "smooth" })
-      }
-
-      onIntersectionObserved(entries) {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio > 0.5) {
-            const intersectingIndex = this.imageTargets.indexOf(entry.target)
-            this.indicatorTargets[intersectingIndex].classList.add("bg-blue-900")
-          }
-          else { 
-            const intersectingIndex = this.imageTargets.indexOf(entry.target)
-            this.indicatorTargets[intersectingIndex].classList.remove("bg-blue-900")
-          }
-        })
-      }
-    })
-  })()
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+  
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+  
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  document.getElementById("graphicsTabContent").click();
+  

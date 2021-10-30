@@ -6,3 +6,61 @@
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
   }
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  width: fit-content;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  color: blue;
+  opacity: 0.5;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+}
+
+.freetrial_sec {
+  background-color: rgb(60, 121, 211);
+  padding: 120px 0;
+  background-image: url(//q5g9j9b9.stackpathcdn.com/wp-content/themes/kimpan/assets/images/free_trial_bg.png);
+  background-size: 108%;
+  background-position: bottom;
+  background-repeat: no-repeat;
+}
+.free_trail_conent {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.hoverEffect{
+  filter: none;
+}
+.hoverEffect:hover{
+  filter: brightness(50%);
+  transform: scale(1.4);
+}
+.imageGalleryWindow:hover .textClass{
+  display: block;
+  margin-left: -50%;
+}

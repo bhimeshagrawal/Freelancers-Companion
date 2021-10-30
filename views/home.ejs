@@ -617,66 +617,148 @@
     </section> -->
 
 
-    <!-- portfolio section  -->
-    <div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center">
-        <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-16 md:py-24 text-gray-800">
-            <div class="w-full max-w-6xl mx-auto">
-                <!-- title carousal  -->
-                <div class="text-center max-w-xl mx-auto">
-                    <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">Our works.</h1>
-                    <h3 class="text-xl mb-5 font-light">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                    <div class="text-center mb-10">
-                        <span class="inline-block w-1 h-1 rounded-full bg-indigo-500 ml-1"></span>
-                        <span class="inline-block w-3 h-1 rounded-full bg-indigo-500 ml-1"></span>
-                        <span class="inline-block w-40 h-1 rounded-full bg-indigo-500"></span>
-                        <span class="inline-block w-3 h-1 rounded-full bg-indigo-500 ml-1"></span>
-                        <span class="inline-block w-1 h-1 rounded-full bg-indigo-500 ml-1"></span>
-                    </div>
-                </div>
-                <!-- image carousal  -->
-                <div class="flex flex-col mt-24" data-controller="slider">
-                    <!-- <h1 class="text-3xl text-gray-900 text-center mb-4"></h1> -->
-                    <div class="flex overflow-x-scroll" data-slider-target="scrollContainer">
-                        <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
-                            <img class="rounded-md"
-                                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-                            <div
-                                class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2">
-                                <a href="">Logo</a></div>
-                        </div>
-                        <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
-                            <img class="rounded-md"
-                                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-                            <div
-                                class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2">
-                                <a href="">Poster</a></div>
-                        </div>
-                        <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
-                            <img class="rounded-md"
-                                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-                            <div
-                                class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2">
-                                <a href="">Poster</a></div>
-                        </div>
-                        <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
-                            <img class="rounded-md"
-                                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-                            <div
-                                class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2">
-                                <a href="">Poster</a></div>
-                        </div>
-                        <div class="w-96 h-64 px-4 flex-shrink-0 relative" data-slider-target="image" id="1">
-                            <img class="rounded-md"
-                                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
-                            <div
-                                class="absolute bottom-8 left-8 z-10 rounded-md border-gray-500 border-1 shadow font-semibold bg-white px-6 py-2">
-                                <a href="">Poster</a></div>
-                        </div>
+    <!-- feature listing section  -->
+    <section class="container mx-auto py-16 border-t">
+        <h1 class="text-4xl md:text-5xl max-w-xl my-8 mx-auto font-bold text-center">Create Unlimited Graphic Or Video
+            Design</h1>
+        <p class="text-gray-400 font-normal text-base text-center mx-24">We can help you with almost everything you might need
+            in the graphic and video design departments.</p>
+        <!-- Tab links -->
+        <div class="tab rounded-full mx-auto my-12">
+            <button
+                class="tablinks rounded-full bg-white border uppercase text-black px-6 md:px-12 py-3 font-bold text-xl active"
+                onclick="openTab(event, 'graphicsTabContent')">Graphics</button>
+            <button
+                class="tablinks rounded-full bg-white border uppercase text-black font-bold text-xl px-6 md:px-12 py-3"
+                onclick="openTab(event, 'videoTabContent')">Video</button>
+        </div>
+        <!-- Tab content -->
+        <div id="graphicsTabContent" class="tabcontent container">
+            <h1 class="text-3xl md:text-4xl max-w-xl my-8 mx-auto font-bold text-center"><i
+                    class="fas fa-check-circle text-green-500"></i>&nbsp;&nbsp;&nbsp; What we do</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 text-center px-12 py-12 gap-4 md:px-24">
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+            </div>
+            <p class="text-gray-400 font-normal text-base text-center">We can help you with almost everything you might
+                need
+                in the graphic and video design departments.</p>
+            <div class="flex justify-center my-6">
+                <button
+                    class="text-center mx-auto font-normal border-blue-500 rounded-full px-6 py-2 border-2 text-blue-500 hover:bg-blue-500 hover:text-white">View
+                    all Graphic Samples</button>
+            </div>
+        </div>
+        <div id="videoTabContent" class="tabcontent container">
+            <h1 class="text-3xl md:text-4xl max-w-xl my-8 mx-auto font-bold text-center"><i
+                    class="fas fa-check-circle text-green-500"></i>&nbsp;&nbsp;&nbsp; What we do</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 text-center px-12 py-12 gap-4 md:px-24">
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+                <div><i class="fas fa-check text-green-500"></i>&nbsp;&nbsp;&nbsp;Photo Editing</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- free trial section  -->
+    <section class="freetrial_sec">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 justify-center">
+                <div class="flex justify-center free_trail_conent">
+                    <div class="grid-cols-1">
+                        <h2 class="text-4xl md:text-5xl my-6 text-white font-bold">Why Pay Upfront?<br> Try MonkeySingh 100% Free!</h2>
+                        <p class="text-white text-lg mb-16 py-6">Brands around the world use MonkeySingh to design better &amp; scale faster. <strong>Sign up for a
+                                free 7 day trial today.<br></strong> Don’t pay unless you subscribe. Cancel anytime you’d
+                            like.</p> 
+                        <a class="px-6 py-2 my-24 rounded-full bg-white border-blue-600 border-2 text-blue-500 text-lg hover:border-white border-b-2 transition duration-500" href="/register-now/">Start Free Trial</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script src="js/home.js"></script>
+    <!-- portfolio section  -->
+    <section class="portfolio_sec">
+        <div>
+            <h2 class="text-4xl py-6 my-6 text-center font-bold">Our Portfolio</h2>
+            <div class="px-1 md:px-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 mx-auto justify-center">
+                <div class="relative imageGalleryWindow overflow-hidden m-6 mx-auto" style="height: 350px; width: 350px;">
+                    <div style="object-fit: contain; overflow: hidden; ">
+                    <img class="hoverEffect transition-all duration-500 overflow-hidden max-w-md" src="https://sp-ao.shortpixel.ai/client/q_glossy,ret_img/https://designshifu.com/wp-content/uploads/2019/12/indigo-logo-05.jpg" alt="">
+                    </div>
+                    <div class="py-3 px-6 border-t-2 border-b-2 textClass border-white hidden">
+                    <h5 class="overlay absolute text-center top-1/2 right-40 uppercase text-white text-xl font-bold underline">Logo</h5>
+                    </div>
+                </div>
+                <div class="relative imageGalleryWindow overflow-hidden m-6 mx-auto" style="height: 350px; width: 350px;">
+                    <div style="object-fit: contain; overflow: hidden; ">
+                    <img class="hoverEffect transition-all duration-500 overflow-hidden max-w-md" src="https://sp-ao.shortpixel.ai/client/q_glossy,ret_img/https://designshifu.com/wp-content/uploads/2019/12/indigo-logo-05.jpg" alt="">
+                    </div>
+                    <div class="py-3 px-6 border-t-2 border-b-2 textClass border-white hidden">
+                    <h5 class="overlay absolute text-center top-1/2 right-40 uppercase text-white text-xl font-bold underline">Logo</h5>
+                    </div>
+                </div>
+                <div class="relative imageGalleryWindow overflow-hidden m-6 mx-auto" style="height: 350px; width: 350px;">
+                    <div style="object-fit: contain; overflow: hidden; ">
+                    <img class="hoverEffect transition-all duration-500 overflow-hidden max-w-md" src="https://sp-ao.shortpixel.ai/client/q_glossy,ret_img/https://designshifu.com/wp-content/uploads/2019/12/indigo-logo-05.jpg" alt="">
+                    </div>
+                    <div class="py-3 px-6 border-t-2 border-b-2 textClass border-white hidden">
+                    <h5 class="overlay absolute text-center top-1/2 right-40 uppercase text-white text-xl font-bold underline">Logo</h5>
+                    </div>
+                </div>
+                <div class="relative imageGalleryWindow overflow-hidden m-6 mx-auto" style="height: 350px; width: 350px;">
+                    <div style="object-fit: contain; overflow: hidden; ">
+                    <img class="hoverEffect transition-all duration-500 overflow-hidden max-w-md" src="https://sp-ao.shortpixel.ai/client/q_glossy,ret_img/https://designshifu.com/wp-content/uploads/2019/12/indigo-logo-05.jpg" alt="">
+                    </div>
+                    <div class="py-3 px-6 border-t-2 border-b-2 textClass border-white hidden">
+                    <h5 class="overlay absolute text-center top-1/2 right-40 uppercase text-white text-xl font-bold underline">Logo</h5>
+                    </div>
+                </div>
+                <div class="relative imageGalleryWindow overflow-hidden m-6 mx-auto" style="height: 350px; width: 350px;">
+                    <div style="object-fit: contain; overflow: hidden; ">
+                    <img class="hoverEffect transition-all duration-500 overflow-hidden max-w-md" src="https://sp-ao.shortpixel.ai/client/q_glossy,ret_img/https://designshifu.com/wp-content/uploads/2019/12/indigo-logo-05.jpg" alt="">
+                    </div>
+                    <div class="py-3 px-6 border-t-2 border-b-2 textClass border-white hidden">
+                    <h5 class="overlay absolute text-center top-1/2 right-40 uppercase text-white text-xl font-bold underline">Logo</h5>
+                    </div>
+                </div>
+                <div class="relative imageGalleryWindow overflow-hidden m-6 mx-auto" style="height: 350px; width: 350px;">
+                    <div style="object-fit: contain; overflow: hidden; ">
+                    <img class="hoverEffect transition-all duration-500 overflow-hidden max-w-md" src="https://sp-ao.shortpixel.ai/client/q_glossy,ret_img/https://designshifu.com/wp-content/uploads/2019/12/indigo-logo-05.jpg" alt="">
+                    </div>
+                    <div class="py-3 px-6 border-t-2 border-b-2 textClass border-white hidden">
+                    <h5 class="overlay absolute text-center top-1/2 right-40 uppercase text-white text-xl font-bold underline">Logo</h5>
+                    </div>
+                </div>
+            </div> 
+            <div class="flex justify-center my-12 mb-16">
+                <a href=""
+                    class="py-2 px-2 text-center mx-auto font-semibold text-white bg-blue-500 border-2 border-blue-500 rounded">View our Portfolio</a>
+            </div>
+        </div>
+    </section>
+
+    <script defer src="js/home.js"></script>
     <%- include("partials/footer"); -%>
