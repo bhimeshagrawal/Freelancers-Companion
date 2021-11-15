@@ -19,8 +19,8 @@
             <div class="relative flex flex-col md:flex-row">
                 <a href="/"
                     class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
-                    <span class="mx-auto text-xl font-black leading-none text-gray-900 select-none">monkeysingh.<span
-                            class="text-indigo-600">.</span></span>
+                    <span class="mx-auto text-xl font-black leading-none text-gray-900 select-none">monkeysingh<span
+                            class="text-blue-600">.</span></span>
                 </a>
                 <nav
                     class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200">
@@ -34,7 +34,7 @@
 
             <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
                 <a href="#" id="createNew"
-                    class="inline-flex items-center justify-center px-4 py-2  text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+                    class="inline-flex items-center justify-center px-4 py-2  text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
                     <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp;Create New
                 </a>
             </div>
@@ -43,119 +43,49 @@
 
     <!-- project listing section  -->
     <section>
-        <h1 class="mx-12 mt-16 text-3xl font-bold text-center">All Projects</h1>
-        <div class="flex flex-wrap items-start p-4">
-            <% projectList.forEach(function(project) { %>
-                <% if(project.status=="completed" ){ %>
+        <h1 class="mx-12 mt-12 mb-8 text-5xl font-semibold text-center text-blue-600">All Projects</h1>
+        <div class="flex flex-wrap items-start justify-start p-2 border-2 rounded-md m-4">
+                <% projectArray.forEach(function(project) { %>
                     <!-- completed project card component -->
-                    <div class=" h-auto m-8 mx-auto bg-gray-50 flex justify-center items-center" style="width: 340px;">
-                        <div class="h-56 mx-4 bg-blue-400 rounded-3xl shadow-md sm:w-80 sm:mx-0" style="width:320px">
+                    <div class=" h-auto my-2  flex justify-center items-center" style="width: 320px;">
+                        <div class="h-56 md:mx-2 lg:mx-4 bg-blue-400 rounded-3xl shadow-md sm:w-80 sm:mx-0" style="width:300px">
                             <div class="h-1/2 w-full flex justify-between items-baseline px-3 py-5">
                                 <h1 class="text-white rounded-md uppercase">
-                                    <%= project.status %>
+                                    <%= project.state %>
                                 </h1>
-                                <i class="fas fa-external-link-alt"></i>
+                                <a href="<%= project.inviteLink %>"><i class="fas fa-external-link-alt"></i></a>
                             </div>
                             <div class=" bg-white h-1/2 w-full rounded-3xl flex flex-col justify-around items-center ">
                                 <div class="w-full h-1/2 flex justify-between items-center px-3 pt-2">
                                     <div class="flex flex-col justify-center items-center">
-                                        <h1 class="text-gray-500 text-xs">Ordered On</h1>
+                                        <h1 class="text-gray-500 text-xs">Date</h1>
                                         <h1 class="text-gray-600 text-sm">
-                                            <%= project.orderedDate%>
+                                            <%= project.date %>
                                         </h1>
                                     </div>
                                     <div class="flex flex-col justify-center items-center">
-                                        <h1 class="text-gray-500 text-xs">Completed On</h1>
-                                        <h1 class="text-gray-600 text-sm">
-                                            <%= project.completedDate %>
-                                        </h1>
+                                        <% if(project.state=="pending"){ %>
+                                        <h1 class="text-gray-500 text-xl"><i class="fas fa-circle text-blue-500"></i></h1>
+                                        <%}else if(project.state=="active"){ %>
+                                        <h1 class="text-gray-500 text-xl"><i class="fas fa-circle text-yellow-500"></i></h1>
+                                        <%} else { %>
+                                        <h1 class="text-gray-500 text-xl"><i class="fas fa-circle text-green-500"></i></h1>
+                                        <% } %>
                                     </div>
                                 </div>
                                 <div class="w-full h-1/2 flex flex-col justify-center items-center">
-                                    <h1 class="text-gray-700 font-bold">
-                                        <%= project.title %>
+                                    <h1 class="text-gray-700 font-bold uppercase">
+                                        <%= project.name %>
                                     </h1>
-                                    <h1 class="text-gray-500 text-sm">
+                                    <h1 class="text-gray-500 text-sm uppercase">
                                         <%= project.category %>
                                     </h1>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <% } %>
-                <% if(project.status=="active" ){ %>
-                    <!-- active project card component -->
-                    <div class=" h-auto m-8 mx-auto bg-gray-50 flex justify-center items-center" style="width: 340px;">
-                        <div class="h-56 mx-4 bg-blue-400 rounded-3xl shadow-md sm:w-80 sm:mx-0" style="width:320px">
-                            <div class="h-1/2 w-full flex justify-between items-baseline px-3 py-5">
-                                <h1 class="text-white rounded-md uppercase">
-                                    <%= project.status %>
-                                </h1>
-                                <i class="fas fa-external-link-alt"></i>
-                            </div>
-                            <div class=" bg-white h-1/2 w-full rounded-3xl flex flex-col justify-around items-center ">
-                                <div class="w-full h-1/2 flex justify-between items-center px-3 pt-2">
-                                    <div class="flex flex-col justify-center items-center">
-                                        <h1 class="text-gray-500 text-xs">Ordered On</h1>
-                                        <h1 class="text-gray-600 text-sm">
-                                            <%= project.orderedDate%>
-                                        </h1>
-                                    </div>
-                                    <div class="flex flex-col justify-center items-center">
-                                        <h1 class="text-gray-500 text-xs">Estimated Date</h1>
-                                        <h1 class="text-gray-600 text-sm">
-                                            <%= project.estimatedDate %>
-                                        </h1>
-                                    </div>
-                                </div>
-                                <div class="w-full h-1/2 flex flex-col justify-center items-center">
-                                    <h1 class="text-gray-700 font-bold">
-                                        <%= project.title %>
-                                    </h1>
-                                    <h1 class="text-gray-500 text-sm">
-                                        <%= project.category %>
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <% } %>
-                <% if(project.status=="pending" ){ %>
-                    <!-- pending project card component -->
-                    <div class=" h-auto m-8 mx-auto bg-gray-50 flex justify-center items-center" style="width: 340px;">
-                        <div class="h-56 mx-4 bg-blue-400 rounded-3xl shadow-md sm:w-80 sm:mx-0" style="width:320px">
-                            <div class="h-1/2 w-full flex justify-between items-baseline px-3 py-5">
-                                <h1 class="text-white rounded-md uppercase">
-                                    <%= project.status %>
-                                </h1>
-                                <i class="fas fa-external-link-alt"></i>
-                            </div>
-                            <div class=" bg-white h-1/2 w-full rounded-3xl flex flex-col justify-around items-center ">
-                                <div class="w-full h-1/2 flex justify-between items-center px-3 pt-2">
-                                    <div class="flex flex-col justify-center items-center">
-                                        <h1 class="text-gray-500 text-xs">Ordered On</h1>
-                                        <h1 class="text-gray-600 text-sm">
-                                            <%= project.orderedDate%>
-                                        </h1>
-                                    </div>
-                                    <div class="flex flex-col justify-center items-center">
-                                        <h1 class="text-gray-500 text-xs">Estimated Date</h1>
-                                        <h1 class="text-gray-600 text-sm">--</h1>
-                                    </div>
-                                </div>
-                                <div class="w-full h-1/2 flex flex-col justify-center items-center">
-                                    <h1 class="text-gray-700 font-bold">
-                                        <%= project.title %>
-                                    </h1>
-                                    <h1 class="text-gray-500 text-sm">
-                                        <%= project.category %>
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <% } %>
-            <% }) %>
+                <% }) %>
+               
         </div>
     </section>
 
@@ -170,7 +100,7 @@
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div>
                             <div class="p-4 shadow-md rounded-md text-left">
-                                <form action="/projects" method="POST">
+                                <form action="/projects" method="POST" id="createNewProject">
                                     <!-- project Title  -->
                                     <div class="mb-4">
                                         <label class="block text-gray-700 text-sm font-bold mb-2" for="projectTitle">
@@ -182,13 +112,19 @@
                                     </div>
                                     <!-- project category  -->
                                     <div class="mb-6">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
-                                            Category
-                                        </label>
-                                        <input
-                                            class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="category" id="category" type="text" placeholder="Please write a Category.">
-                                        <p class="text-red-500 text-xs italic">Please choose a Category.</p>
+                                        <div class="relative inline-block w-full text-gray-700">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2" for="projectTitle">
+                                                Category
+                                            </label>
+                                            <select name="category" id="category" form="createNewProject" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline" placeholder="Regular input">
+                                              <option value="artwork">Artwork</option>
+                                              <option value="logo">Logo</option>
+                                              <option value="poster">Poster</option>
+                                            </select>
+                                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                                            </div>
+                                          </div>
                                     </div>    
                                     <!-- buttons  -->
                                     <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
