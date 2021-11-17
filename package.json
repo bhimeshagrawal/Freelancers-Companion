@@ -14,6 +14,7 @@
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-sanitizer": "^1.0.6",
@@ -21,6 +22,7 @@
     "method-override": "^3.0.0",
     "mongoose": "^6.0.12",
     "node-fetch": "^3.1.0",
+    "nodemailer": "^6.7.1",
     "passport": "^0.5.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
@@ -28,7 +30,9 @@
     "postcss-cli": "^9.0.1",
     "request": "^2.88.2",
     "slack": "^11.0.2",
+    "stripe": "^8.188.0",
     "tailwindcss": "^2.2.17",
-    "tailwindcss-scroll-snap": "^1.1.0"
+    "tailwindcss-scroll-snap": "^1.1.0",
+    "uuid": "^8.3.2"
   }
 }

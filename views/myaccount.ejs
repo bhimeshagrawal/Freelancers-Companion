@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>My Account - Monkeysingh</title>
+  <!-- <link rel="stylesheet" href="style.css" /> -->
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+  <section class="p-8 flex justify-center h-screen bg-blue-300">
+    <div class="border mx-auto p-8 rounded-lg bg-white">
+      <h1 class="block text-5xl font-semibold text-gray-600 text-center mb-4">
+        My account
+      </h1>
+      <% %>
+        <hr class="mb-8" />
+        <label for="username" class="text-xs block mx-auto">username:</label>
+        <input type="text" name="username" id="" value="<%= userDetails.username %>" readonly class="
+            mb-4
+            max-w-96
+            w-64
+            border
+            p-2
+            block
+            rounded-md
+            text-sm text-gray-500
+            bg-gray-50
+          " />
+        <label for="email" class="text-xs mt-16">email:</label>
+        <input type="email" name="email" value="<%= userDetails.email %>" readonly class="
+            mb-4
+            max-w-96
+            border
+            p-2
+            w-64
+            block
+            rounded-md
+            text-sm text-gray-500
+            bg-gray-50
+          " />
+        <label for="" class="text-xs block">Name:</label>
+        <input type="text" name="firstName" id="" readonly value="<%= userDetails.firstName%>" class="
+            mx-auto
+            mb-4
+            max-w-96
+            w-32
+            border
+            inline
+            p-2
+            rounded-md
+            text-sm text-gray-500
+            bg-gray-50
+          " />
+        <input type="text" name="username" id="" readonly value="<%= userDetails.lastName %>" class="
+            mx-auto
+            mb-4
+            max-w-96
+            w-32
+            inline
+            border
+            p-2
+            rounded-md
+            text-sm text-gray-500
+            bg-gray-50
+          " />
+        <label for="subscription" class="text-xs block my-3">Your current Subscription:</label>
+        <% if(!userDetails.subscription){ %>
+          <a href="/checkout.html" class="font-semibold block text-sm text-center w-64 py-3 px-6 rounded-md m-2 border">
+            No Active Plan. Click to Checkout.
+          </a>
+          <% }else{ %>
+            <div class="font-semibold text-sm text-center w-64 py-3 px-6 rounded-md m-2 border">
+              <%= userDetails.subscription %>&nbsp;Plan
+            </div>
+            <% } %>
+              <br>
+              <a href="/customerportal" class="
+
+                  bg-blue-500
+                  py-1
+                  px-4
+                  mx-2
+                  block
+                  rounded-md
+                  text-white text-sm text-center
+                ">
+                Manage Subscription
+              </a>
+              <a href="/logout" class="
+           
+            bg-red-500
+            py-1
+            px-4
+            mx-2 
+            my-4
+            block
+            rounded-md
+            text-white text-sm text-center
+          ">
+                Log out!
+              </a>
+    </div>
+  </section>
+</body>
+
+</html>
