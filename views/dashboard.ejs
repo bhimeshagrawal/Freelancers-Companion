@@ -1,0 +1,247 @@
+<!-- header with projects create new project button -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" media="print" onload="this.media='all'">
+    <script async src="https://kit.fontawesome.com/20970c5fb1.js" crossorigin="anonymous"></script>
+    <title>App - MonkeySingh</title>
+</head>
+
+<body>
+
+    <!-- header -->
+    <section class="w-full px-8 text-gray-700 bg-white border">
+        <div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
+            <div class="relative flex flex-col justify-center md:flex-row">
+                <a href="/"
+                    class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
+                    <span class="mx-auto text-xl font-black leading-none text-gray-900 select-none">monkeysingh<span
+                            class="text-blue-600">.</span></span>
+                </a>
+                <nav
+                    class="flex flex-wrap items-center justify-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200">
+                    <a href="#"
+                        class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900 border-blue-500 border-b-4 p-2">Dashboard</a>
+                </nav>
+            </div>
+
+            <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+
+                <a href="#" id="createNew"
+                    class="inline-flex items-center justify-center px-4 py-2  text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+                    <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp;Create New
+                </a>
+                <a href="/logout"
+                    class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6  whitespace-no-wrap bg-red-500 border text-white border-gray-200 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:shadow-none">
+                    Log out
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- my account and my projects  -->
+    <div class="flex flex-wrap justify-center">
+        <!-- project listing section  -->
+        <section class="w-full lg:w-3/4 border-gray-50 border">
+            <h1 class="mx-12 mt-12 mb-8 text-3xl font-semibold text-center text-blue-600">My Projects</h1>
+            <div class="flex flex-wrap items-start justify-center p-2 border-2 rounded-md m-4 bg-gray-50">
+                <% if(user.projects.length==0 && !user.currentPlan){ %>
+                    <h1 class="m-8 text-center text-gray-500">Complete subscription process to be able
+                        to
+                        add project</h1>
+                    <% } %>
+                        <% if(user.projects.length==0 && user.currentPlan ){ %>
+                            <h1 class="m-8 text-center text-gray-500">Please add project by cicking on create new
+                                button.
+                            </h1>
+                            <% } %>
+                                <% user.projects.forEach(function(project) { %>
+                                    <!-- completed project card component -->
+                                    <div class=" h-auto my-2  flex justify-center items-center" style="width: 320px;">
+                                        <div class="h-56 md:mx-2 lg:mx-4 bg-blue-400 rounded-3xl shadow-md sm:w-80 sm:mx-0"
+                                            style="width:300px">
+                                            <div class="h-1/2 w-full flex justify-between items-baseline px-3 py-5">
+                                                <h1 class="text-white rounded-md uppercase">
+                                                    <%= project.state %>
+                                                </h1>
+                                                <a href="<%= project.url %>"><i
+                                                        class="fas fa-external-link-alt"></i></a>
+                                            </div>
+                                            <div
+                                                class=" bg-white h-1/2 w-full rounded-3xl flex flex-col justify-around items-center ">
+                                                <div class="w-full h-1/2 flex justify-between items-center px-3 pt-2">
+                                                    <div class="flex flex-col justify-center items-center">
+                                                        <h1 class="text-gray-500 text-xs">Date</h1>
+                                                        <h1 class="text-gray-600 text-sm">
+                                                            <%= project.date %>
+                                                        </h1>
+                                                    </div>
+                                                    <div class="flex flex-col justify-center items-center">
+                                                        <% if(project.state=="pending" ){ %>
+                                                            <h1 class="text-gray-500 text-xl"><i
+                                                                    class="fas fa-circle text-blue-500"></i></h1>
+                                                            <%}else if(project.state=="active" ){ %>
+                                                                <h1 class="text-gray-500 text-xl"><i
+                                                                        class="fas fa-circle text-yellow-500"></i></h1>
+                                                                <%} else { %>
+                                                                    <h1 class="text-gray-500 text-xl"><i
+                                                                            class="fas fa-circle text-green-500"></i>
+                                                                    </h1>
+                                                                    <% } %>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full h-1/2 flex flex-col justify-center items-center">
+                                                    <h1 class="text-gray-700 font-bold uppercase">
+                                                        <%= project.title %>
+                                                    </h1>
+                                                    <h1 class="text-gray-500 text-sm uppercase">
+                                                        <%= project.category %>
+                                                    </h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+
+            </div>
+        </section>
+        <!-- myaccount system  -->
+        <section class="w-full lg:w-1/4 border-gray-50 border">
+            <h1 class="mx-12 mt-12 mb-8 text-3xl font-semibold text-center text-blue-600">My Account</h1>
+            <div class="p-2 m-2 flex flex-col text-center">
+                <div class="mb-4">
+                    <p class="text block">Username: </p>
+                    <input type="text" readonly name="" id="" value="<%= user.username %>"
+                        class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+                </div>
+                <div class="mb-4">
+                    <p class="text block">Email: </p>
+                    <input type="text" readonly name="" id="" value="<%= user.email%>"
+                        class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+                </div>
+                <div class="mb-4">
+                    <p class="text block">Full Name: </p>
+                    <input type="text" readonly name="" id="" value="<%= user.firstName %> &nbsp; <%= user.lastName %>"
+                        class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+                </div>
+                <div class="mb-4">
+                    <p class="text block">Your current Plan: </p>
+                    <% if(!user.currentPlan){ %>
+                        <input type="text" readonly name="" id="" value="Please subscribe to a plan"
+                            class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+                </div>
+                <div class="mb-4">
+                    <p class="text block">Click below button to subscribe a plan</p>
+                    <a href="/pricing" id=""
+                        class="inline-flex items-center justify-center px-4 py-2 my-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+                        Subscribe a plan
+                    </a>
+                </div>
+                <% } else { %>
+                    <input type="text" readonly name="" id="" value="<%= user.currentPlan %>"
+                        class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+            </div>
+            <div class="mb-4">
+                <p class="text block">View invoices, update subscription & payment methods </p>
+                <a href="/customerPortal" id=""
+                    class="inline-flex items-center justify-center px-4 py-2 my-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+                    Access Customer Portal
+                </a>
+            </div>
+            <% } %>
+    </div>
+    </section>
+    </div>
+
+
+    <!-- create project Modal-->
+    <div id="createNewModal" class="fixed hidden z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
+        role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div
+                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div>
+                        <div class="p-4 rounded-md text-left">
+                            <form action="/project" method="POST" id="createNewProject">
+                                <!-- project Title  -->
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="projectTitle">
+                                        Title
+                                    </label>
+                                    <input
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="projectTitle" type="text" name="projectTitle"
+                                        placeholder="My Project Title">
+                                </div>
+                                <!-- project category  -->
+                                <div class="mb-6">
+                                    <div class="relative inline-block w-full text-gray-700">
+                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="projectTitle">
+                                            Category
+                                        </label>
+                                        <select name="category" id="category" form="createNewProject"
+                                            class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
+                                            placeholder="Regular input">
+                                            <option value="artwork">Artwork</option>
+                                            <option value="logo">Logo</option>
+                                            <option value="poster">Poster</option>
+                                        </select>
+                                        <div
+                                            class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                                                <path
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" fill-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- buttons  -->
+                                <div class=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                    <!-- submit button  -->
+                                    <button
+                                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Submit!</button>
+                                    <!-- cancel button  -->
+                                    <button type="button"
+                                        class="close mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal close functionality  -->
+    <script>
+        var modal = document.getElementById("createNewModal");
+        var btn = document.getElementById("createNew");
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

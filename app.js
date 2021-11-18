@@ -11,8 +11,6 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const LocalStrategy = require("passport-local");
-const flash = require("connect-flash");
-const session = require("express-session");
 const methodOverride = require("method-override");
 const User = require("./models/user");
 const Project = require("./models/project");
@@ -20,9 +18,17 @@ const cors = require("cors");
 const stripe = require("stripe")(
   "sk_test_51JwJKnSFuvwOm214HyYFDvWLu3Z1i9iN6niF53o0pQ55XDiIm3ujVLkczIH3y9BrZZyBq8djfcFHTtJJ6oapccTX00sCaU1a32"
 );
-const uuid = require("uuid");
 const YOUR_DOMAIN = "http://localhost:3000";
-const request = require("request");
+const buildLength = {
+  starter: 2,
+  basic: 6,
+  plus: 25,
+};
+const priceId = {
+  starter: "price_1Jx4D1SFuvwOm214rIu98ukc",
+  basic: "price_1Jx4EISFuvwOm2142FiFAS5z",
+  plus: "price_1Jx4ExSFuvwOm214oxPLIp9i",
+};
 
 /*
 ==========================================
@@ -30,10 +36,6 @@ CONFIGURATIONS
 ==========================================
 */
 const PORT = process.env.PORT || 3000;
-// mongoose.connect("mongodb://localhost/monkeysingh", function (err) {
-//   if (!err) console.log("database connected");
-//   else console.log(err);
-// });
 mongoose.connect(
   "mongodb+srv://admin:monkeysingh@monkeysingh.ztdvu.mongodb.net/monkeysingh?retryWrites=true&w=majority",
   (err) => {
@@ -75,31 +77,79 @@ ROUTES
 app.get("/", isLoggedInOnlyForHomePage, function (req, res) {
   res.render("home");
 });
-// show project page
-app.get("/projects", isLoggedIn, function (req, res) {
+function isLoggedInOnlyForHomePage(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/dashboard");
+  }
+  return next();
+}
+
+app.get("/pricing", (req, res) => {
+  res.render("pricing");
+});
+// show dashboard page
+app.get("/dashboard", isLoggedIn, async function (req, res) {
+  // getting users current plan
+  const customer = await stripe.customers
+    .retrieve(req.user.stripeId, {
+      expand: ["subscriptions"],
+    })
+    .then((sub) => {
+      // console.log(sub.subscriptions.data[0].plan);
+      var tempPlan = "";
+      if (!sub.subscriptions.data[0]) {
+        req.user.currentPlan = "";
+      } else {
+        if (sub.subscriptions.data[0].plan.id == priceId.starter) {
+          tempPlan = "Starter";
+        } else if (sub.subscriptions.data[0].plan.id == priceId.basic) {
+          tempPlan = "Basic";
+        } else if (sub.subscriptions.data[0].plan.id == priceId.plus) {
+          tempPlan = "Plus";
+        } else {
+          tempPlan = "";
+        }
+      }
+      User.findOne({ email: req.user.email }, function (err, foundUser) {
+        if (err) console.log(err);
+        else {
+          foundUser.currentPlan = tempPlan;
+          foundUser.save(function (err, data) {
+            if (err) console.log(err);
+          });
+        }
+      });
+    });
+
+  // populating its posts and rendering dashboard
   User.findOne({ email: req.user.email })
     .populate("projects")
     .exec(function (err, user) {
       if (err) console.log(err);
       else {
-        // console.log(user.projects)
-        res.render("projects", { user: user });
+        res.render("dashboard", { user: user });
       }
     });
 });
+
 // create a new project
-app.post("/projects", isLoggedIn, function (req, res) {
+app.post("/project", isLoggedIn, function (req, res) {
   if (
-    (req.user.subscription == "Basic" && req.user.projects.length < 1) ||
-    (req.user.subscription == "Starter" && req.user.projects.length < 10) ||
-    req.user.subscription == "Plus"
+    (req.user.currentPlan == "Basic" &&
+      req.user.projects.length < buildLength.basic) ||
+    (req.user.currentPlan == "Starter" &&
+      req.user.projects.length < buildLength.starter) ||
+    (req.user.currentPlan == "Plus" &&
+      req.user.projects.length < buildLength.plus)
   ) {
-    // get data from form and add to projectList array
+    // getting todays date
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, "0");
     var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     var yyyy = today.getFullYear();
     today = dd + "/" + mm + "/" + yyyy;
+
+    // get data from form and add to projectList array
     Project.create(
       {
         title: req.body.projectTitle,
@@ -120,30 +170,29 @@ app.post("/projects", isLoggedIn, function (req, res) {
         });
       }
     );
-    res.redirect("/projects");
-  } else {
-    res.redirect("/myaccount");
+    res.redirect("/dashboard");
   }
-});
-//show accounts page and billing page
-app.get("/myaccount", isLoggedIn, function (req, res) {
-  // console.log(req.user);
-  res.render("myaccount", { userDetails: req.user });
 });
 
 // AUTH ROUTES
-// show register form
+
+// show register form and then post to /register
 app.get("/register", function (req, res) {
-  res.render("register");
+  var err = {
+    message: "",
+  };
+  res.render("register", { err: err });
 });
-//handle register logic
+//get data from register page , check for duplicate username and email and create new stripe customer and add it to db
 app.post("/register", function (req, res) {
   User.find(
     { $or: [{ username: req.body.username }, { email: req.body.email }] },
     function (err, foundUsers) {
       if (foundUsers.length != 0) {
-        console.log("email or username already exist");
-        res.redirect("/register");
+        var errp = {
+          message: "Email or username already exist",
+        };
+        res.redirect("/register", { err: errp });
       } else {
         var temp = {
           firstName: req.body.firstName,
@@ -166,14 +215,15 @@ app.post("/register", function (req, res) {
               firstName: customer.metadata.firstName,
               lastName: customer.metadata.lastName,
               email: customer.email,
+              currentPlan: "",
             });
             User.register(newUser, req.body.password, function (err, user) {
               if (err) {
                 console.log(err);
-                return res.render("register");
+                return res.render("register", { err: err });
               }
               passport.authenticate("local")(req, res, function () {
-                res.redirect("/myaccount");
+                res.redirect("/dashboard");
               });
             });
           });
@@ -181,6 +231,7 @@ app.post("/register", function (req, res) {
     }
   );
 });
+
 // show login form
 app.get("/login", function (req, res) {
   res.render("login");
@@ -189,7 +240,7 @@ app.get("/login", function (req, res) {
 app.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/projects",
+    successRedirect: "/dashboard",
     failureRedirect: "/login",
   }),
   function (req, res) {}
@@ -206,37 +257,34 @@ function isLoggedIn(req, res, next) {
   }
   res.redirect("/login");
 }
-//function if subs is active
-function isLoggedInOnlyForHomePage(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/projects");
-  }
-  return next();
-}
-app.post("/create-checkout-session", async (req, res) => {
-  if (req.body.lookup_key == "starterplankey")
-    var price = "price_1JwUgtSFuvwOm214kNRAlmSZ";
-  if (req.body.lookup_key == "basicplankey")
-    var price = "price_1JwUhhSFuvwOm214avEYKTCU";
-  if (req.body.lookup_key == "plusplankey")
-    var price = "price_1JwUidSFuvwOm214y6gkPT8f";
+
+app.post("/create-checkout-session", isLoggedIn, async (req, res) => {
+  const selectedPrice = {
+    price: req.body.price,
+    quantity: 1,
+  };
   const session = await stripe.checkout.sessions.create({
-    billing_address_collection: "auto",
+    billing_address_collection: "required",
+    allow_promotion_codes: true,
     payment_method_types: ["card"],
-    line_items: [
-      {
-        price: price,
-      },
-    ],
+    line_items: [selectedPrice],
     phone_number_collection: {
       enabled: true,
     },
     mode: "subscription",
-    success_url: `${YOUR_DOMAIN}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+    success_url: `${YOUR_DOMAIN}/`,
+    cancel_url: `${YOUR_DOMAIN}/`,
     customer: req.user.stripeId,
   });
-
+  User.findOne({ email: req.user.email }, (err, user) => {
+    if (err) console.log(err);
+    else {
+      user.checkoutSessions.push(session);
+      user.save(function (err, user) {
+        if (err) console.log(err);
+      });
+    }
+  });
   res.redirect(303, session.url);
 });
 app.post("/create-portal-session", async (req, res) => {
@@ -251,9 +299,9 @@ app.post("/create-portal-session", async (req, res) => {
     .retrieve(checkoutSession.subscription)
     .then((sub) => {
       var subvalue = "";
-      if (sub.plan.id == "price_1JwUgtSFuvwOm214kNRAlmSZ") subvalue = "Starter";
-      if (sub.plan.id == "price_1JwUhhSFuvwOm214avEYKTCU") subvalue = "Basic";
-      if (sub.plan.id == "price_1JwUidSFuvwOm214y6gkPT8f") subvalue = "Plus";
+      if (sub.plan.id == "price_1Jx4D1SFuvwOm214rIu98ukc") subvalue = "Starter";
+      if (sub.plan.id == "price_1Jx4EISFuvwOm2142FiFAS5z") subvalue = "Basic";
+      if (sub.plan.id == "price_1Jx4ExSFuvwOm214oxPLIp9i") subvalue = "Plus";
       //to do update mongodb
       User.findOne({ email: req.user.email }, (err, user) => {
         if (err) console.log(err);
@@ -276,12 +324,14 @@ app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
   (request, response) => {
+    console.log(" i am running");
+    console.log(request.body);
     const event = request.body;
     // Replace this endpoint secret with your endpoint's unique secret
     // If you are testing with the CLI, find the secret by running 'stripe listen'
     // If you are using an endpoint defined with the API or dashboard, look in your webhook settings
     // at https://dashboard.stripe.com/webhooks
-    const endpointSecret = "whsec_12345";
+    const endpointSecret = "whsec_OPYpTXZC9MsHx3u8VoJcj2j6nZRpwQPE";
     // Only verify the event if you have an endpoint secret defined.
     // Otherwise use the basic event deserialized with JSON.parse
     if (endpointSecret) {

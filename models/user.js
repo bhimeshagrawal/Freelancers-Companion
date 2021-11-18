@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-var Project = require("./project");
 var passportLocalMongoose = require("passport-local-mongoose");
 
 var UserSchema = new mongoose.Schema({
@@ -9,7 +8,9 @@ var UserSchema = new mongoose.Schema({
   email: String,
   username: String,
   password: String,
-  subscription: String,
+  subscription: Object,
+  currentPlan: String,
+  checkoutSessions: Array,
   projects: [
     {
       type: mongoose.Schema.Types.ObjectId,
