@@ -74,7 +74,7 @@ ROUTES
 */
 
 // show landing page
-app.get("/", isLoggedInOnlyForHomePage, function (req, res) {
+app.get("/", function (req, res) {
   res.render("home");
 });
 function isLoggedInOnlyForHomePage(req, res, next) {
