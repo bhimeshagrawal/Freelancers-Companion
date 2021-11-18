@@ -18,7 +18,7 @@ const cors = require("cors");
 const stripe = require("stripe")(
   "sk_test_51JwJKnSFuvwOm214HyYFDvWLu3Z1i9iN6niF53o0pQ55XDiIm3ujVLkczIH3y9BrZZyBq8djfcFHTtJJ6oapccTX00sCaU1a32"
 );
-const YOUR_DOMAIN = "http://localhost:3000";
+const YOUR_DOMAIN = "http://pure-journey-78047.herokuapp.com";
 const buildLength = {
   starter: 2,
   basic: 6,
