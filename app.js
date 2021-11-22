@@ -14,7 +14,10 @@ const LocalStrategy = require("passport-local");
 const methodOverride = require("method-override");
 const User = require("./models/user");
 const Project = require("./models/project");
+const ContactQuery = require("./models/contactQuery");
+const Blog = require("./models/blog");
 const cors = require("cors");
+const { post } = require("request");
 const stripe = require("stripe")(
   "sk_test_51JwJKnSFuvwOm214HyYFDvWLu3Z1i9iN6niF53o0pQ55XDiIm3ujVLkczIH3y9BrZZyBq8djfcFHTtJJ6oapccTX00sCaU1a32"
 );
@@ -77,6 +80,7 @@ ROUTES
 app.get("/", function (req, res) {
   res.render("home");
 });
+
 function isLoggedInOnlyForHomePage(req, res, next) {
   if (req.isAuthenticated()) {
     return res.redirect("/dashboard");
@@ -396,4 +400,82 @@ app.get("/customerportal", isLoggedIn, (req, res) => {
       return_url: YOUR_DOMAIN,
     })
     .then((sessionObject) => res.redirect(sessionObject.url));
+});
+
+app.get("/contactus", (req, res) => {
+  res.render("contactus", { isQuerySubmitted: false });
+});
+app.post("/contactus", (req, res) => {
+  ContactQuery.create(
+    {
+      name: req.body.name,
+      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
+      companyName: req.body.companyName,
+      message: req.body.message,
+    },
+    (err, contactQuery) => {
+      if (err) console.log(err);
+      else {
+        res.render("contactus", { isQuerySubmitted: true });
+      }
+    }
+  );
+});
+app.get("/features", (req, res) => {
+  res.render("features");
+});
+
+app.get("/ourwork", (req, res) => {
+  res.render("ourwork");
+});
+
+app.get("/blog", (req, res) => {
+  //find all blogs , make array and render all blogs
+  Blog.find({}, (err, blogPostArray) => {
+    if (err) console.log(err);
+    else {
+      res.render("blog", { blogPostArray: blogPostArray });
+    }
+  });
+});
+// app.get("/blog/:id", (req, res) => {
+//   //get blog post from given req.params.id and render it to the blogpost page
+//   Blog.findOne({ _id: req.params.id }, (err, blogPost) => {
+//     if (err) console.log(err);
+//     else {
+//       res.render("blogpost", { blogPost: blogPost });
+//     }
+//   });
+// });
+app.post("/create-new-blogpost", (req, res) => {
+  // getting todays date
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  var yyyy = today.getFullYear();
+  today = dd + "/" + mm + "/" + yyyy;
+  // creating post
+  var newBlog = new Blog({
+    author: req.body.author,
+    title: req.body.title,
+    category: req.body.category,
+    description: req.body.description,
+    date: today,
+  });
+  //save this in blog collection and redirect to all blog page
+  newBlog.save((err, blog) => {
+    if (err) console.log(err);
+    else {
+      res.redirect("/blog");
+    }
+  });
+});
+
+app.get("/admin/:id/:password", (req, res) => {
+  var adminId = "cc1BkAATqxf52oZo2P3q";
+  var adminPassword = "ws1WQAMwap4tPJQFEHo0";
+  if (req.params.id == adminId && req.params.password == adminPassword)
+    res.render("admin");
+  else res.render("home");
 });
