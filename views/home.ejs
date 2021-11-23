@@ -42,8 +42,9 @@
                                         <polyline points="12 5 19 12 12 19"></polyline>
                                     </svg>
                                 </a>
-                                <a href="/howitworks"
-                                    class="flex items-center px-6 py-3 text-gray-500 bg-gray-100 rounded-md hover:bg-gray-200 hover:text-gray-600">
+                                <a href="#howitworks"
+                                    class="flex transition-all
+                                    duration-200 items-center px-6 py-3 text-gray-500 bg-gray-100 rounded-md hover:bg-gray-200 hover:text-gray-600">
                                     Learn More
                                 </a>
                             </div>
@@ -224,7 +225,7 @@
         <hr>
 
         <!-- how it works  -->
-        <section class="py-20 px-4">
+        <section id="howitworks" class="py-20 px-4 transition-all duration-200">
             <div class="container max-w-6xl mx-auto">
                 <h2 class="text-4xl font-bold tracking-tight text-center">How it works</h2>
                 <p class="mt-2 text-lg text-center text-gray-600">Check out our list of awesome features below.</p>
@@ -555,62 +556,22 @@
                         website/app design, there's always a qualified designer for the job.
                     </p>
                 </div>
-                <button style="min-width: 150px; height: 50px;"
+                <a href="/ourwork"
                     class="px-6 my-auto mx-auto py-2 border-blue-600 text-blue-600 border-2 hover:bg-blue-600 hover:text-white transition duration-100 shadow-xl shadow-blue-500 rounded-md">
                     View All
-                </button>
+                </a>
             </div>
             <!-- image gallery  -->
             <div class="flex py-12 flex-row gap-6 overflow-scroll flex-nowrap transition-500 image-gallery">
-                <!-- card -->
-                <div class="relative card-body bottom-0" style="min-height: 250px; min-width: 300px;">
-                    <img class="rounded-md card-image" src="https://source.unsplash.com/random/300x250" alt="" />
-                    <button class="px-6 card-text py-3 absolute bottom-4 bg-white rounded-md left-4">
-                        Logo
-                    </button>
-                </div>
-                <!-- card -->
-                <div class="relative card-body bottom-0" style="min-height: 250px; min-width: 300px;">
-                    <img class="rounded-md card-image" src="https://source.unsplash.com/random/300x250" alt="" />
-                    <button class="px-6 card-text py-3 absolute bottom-4 bg-white rounded-md left-4">
-                        Logo
-                    </button>
-                </div>
-                <!-- card -->
-                <div class="relative card-body bottom-0" style="min-height: 250px; min-width: 300px;">
-                    <img class="rounded-md card-image" src="https://source.unsplash.com/random/300x250" alt="" />
-                    <button class="px-6 card-text py-3 absolute bottom-4 bg-white rounded-md left-4">
-                        Logo
-                    </button>
-                </div>
-                <!-- card -->
-                <div class="relative card-body bottom-0" style="min-height: 250px; min-width: 300px;">
-                    <img class="rounded-md card-image" src="https://source.unsplash.com/random/300x250" alt="" />
-                    <button class="px-6 card-text py-3 absolute bottom-4 bg-white rounded-md left-4">
-                        Logo
-                    </button>
-                </div>
-                <!-- card -->
-                <div class="relative card-body bottom-0" style="min-height: 250px; min-width: 300px;">
-                    <img class="rounded-md card-image" src="https://source.unsplash.com/random/300x250" alt="" />
-                    <button class="px-6 card-text py-3 absolute bottom-4 bg-white rounded-md left-4">
-                        Logo
-                    </button>
-                </div>
-                <!-- card -->
-                <div class="relative card-body bottom-0" style="min-height: 250px; min-width: 300px;">
-                    <img class="rounded-md card-image" src="https://source.unsplash.com/random/300x250" alt="" />
-                    <button class="px-6 card-text py-3 absolute bottom-4 bg-white rounded-md left-4">
-                        Logo
-                    </button>
-                </div>
-                <!-- card -->
-                <div class="relative card-body bottom-0" style="min-height: 250px; min-width: 300px;">
-                    <img class="rounded-md card-image" src="https://source.unsplash.com/random/300x250" alt="" />
-                    <button class="px-6 card-text py-3 absolute bottom-4 bg-white rounded-md left-4">
-                        Logo
-                    </button>
-                </div>
+                <% workArray.forEach( work=> { %>
+                    <!-- card -->
+                    <div class="relative card-body bottom-0" style="min-height: 250px; min-width: 300px;">
+                        <img class="rounded-md card-image" src="<%= work.image %>" alt="" />
+                        <button class="px-6 card-text py-3 absolute bottom-4 bg-white rounded-md left-4">
+                            <%= work.category %>
+                        </button>
+                    </div>
+                    <% }); %>
             </div>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -651,58 +612,28 @@
                     </h2>
                     <div class="block w-full h-0.5 max-w-lg mt-6 bg-purple-100 rounded-full"></div>
 
-                    <div class="items-center justify-center w-full mt-12 mb-4 lg:flex">
-                        <div class="flex flex-col items-start justify-start w-full h-auto mb-12 lg:w-1/3 lg:mb-0">
-                            <div class="flex items-center justify-center">
-                                <div class="w-16 h-16 mr-4 overflow-hidden bg-gray-200 rounded-full">
-                                    <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1700&amp;q=80"
-                                        class="object-cover w-full h-full" alt="name 1">
+                    <div class="my-6 w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <% testimonialArray.forEach(testimonial=> { %>
+                            <div class="bg-white shadow-xl border rounded-lg p-6">
+                                <div class="flex items-center space-x-6 mb-4">
+                                    <img class="h-28 w-28 object-cover object-center rounded-full"
+                                        src="<%= testimonial.image %>" alt="photo">
+                                    <div>
+                                        <p class="text-xl text-gray-700 font-normal mb-1">
+                                            <%= testimonial.name %>
+                                        </p>
+                                        <p class="text-base text-blue-600 font-normal">
+                                            <%= testimonial.designation %>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="flex flex-col items-start justify-center">
-                                    <h4 class="font-bold text-gray-800">John Doe</h4>
-                                    <p class="text-gray-600">CEO of Something</p>
-                                </div>
-                            </div>
-                            <blockquote class="mt-8 text-lg text-gray-500">"This is a no-brainer if you want to take
-                                your
-                                business to the next level. If you are looking for the ultimate toolset, this is it!"
-                            </blockquote>
-                        </div>
-                        <div
-                            class="flex flex-col items-start justify-start w-full h-auto px-0 mx-0 mb-12 border-l border-r border-transparent lg:w-1/3 lg:mb-0 lg:px-8 lg:mx-8 lg:border-gray-200">
-                            <div class="flex items-center justify-center">
-                                <div class="w-16 h-16 mr-4 overflow-hidden bg-gray-200 rounded-full">
-                                    <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2547&amp;q=80"
-                                        class="object-cover w-full h-full" alt="name 2">
-                                </div>
-                                <div class="flex flex-col items-start justify-center">
-                                    <h4 class="font-bold text-gray-800">Jane Doe</h4>
-                                    <p class="text-gray-600">CTO of Business</p>
+                                <div>
+                                    <p class="text-gray-400 leading-loose font-normal text-base">
+                                        <%= testimonial.description %>
+                                    </p>
                                 </div>
                             </div>
-                            <blockquote class="mt-8 text-lg text-gray-500">"Thanks for creating this service. My life is
-                                so
-                                much
-                                easier.
-                                Thanks for making such a great product."</blockquote>
-                        </div>
-                        <div class="flex flex-col items-start justify-start w-full h-auto lg:w-1/3">
-                            <div class="flex items-center justify-center">
-                                <div class="w-16 h-16 mr-4 overflow-hidden bg-gray-200 rounded-full">
-                                    <img src="https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1256&amp;q=80"
-                                        class="object-cover w-full h-full" alt="name 3">
-                                </div>
-                                <div class="flex flex-col items-start justify-center">
-                                    <h4 class="font-bold text-gray-800">John Smith</h4>
-                                    <p class="text-gray-600">Creator of Stuff</p>
-                                </div>
-                            </div>
-                            <blockquote class="mt-8 text-lg text-gray-500">"Packed with awesome content and exactly what
-                                I
-                                was
-                                looking
-                                for. I would highly recommend this to anyone."</blockquote>
-                        </div>
+                            <% }); %>
                     </div>
                 </div>
             </div>

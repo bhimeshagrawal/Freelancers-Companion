@@ -16,8 +16,12 @@ const User = require("./models/user");
 const Project = require("./models/project");
 const ContactQuery = require("./models/contactQuery");
 const Blog = require("./models/blog");
+const Testimonial = require("./models/testimonial");
+const Work = require("./models/work");
 const cors = require("cors");
 const { post } = require("request");
+const work = require("./models/work");
+const testimonial = require("./models/testimonial");
 const stripe = require("stripe")(
   "sk_test_51JwJKnSFuvwOm214HyYFDvWLu3Z1i9iN6niF53o0pQ55XDiIm3ujVLkczIH3y9BrZZyBq8djfcFHTtJJ6oapccTX00sCaU1a32"
 );
@@ -78,7 +82,20 @@ ROUTES
 
 // show landing page
 app.get("/", function (req, res) {
-  res.render("home");
+  Work.find({}, (err, workArray) => {
+    if (err) console.log(err);
+    else {
+      Testimonial.find({}, (err, testimonialArray) => {
+        if (err) console.log(err);
+        else {
+          res.render("home", {
+            workArray: workArray,
+            testimonialArray: testimonialArray,
+          });
+        }
+      });
+    }
+  });
 });
 
 function isLoggedInOnlyForHomePage(req, res, next) {
@@ -276,7 +293,7 @@ app.post("/create-checkout-session", isLoggedIn, async (req, res) => {
       enabled: true,
     },
     mode: "subscription",
-    success_url: `${YOUR_DOMAIN}/`,
+    success_url: `${YOUR_DOMAIN}/dashboard`,
     cancel_url: `${YOUR_DOMAIN}/`,
     customer: req.user.stripeId,
   });
@@ -427,7 +444,12 @@ app.get("/features", (req, res) => {
 });
 
 app.get("/ourwork", (req, res) => {
-  res.render("ourwork");
+  Work.find({}, (err, workArray) => {
+    if (err) console.log(err);
+    else {
+      res.render("ourwork", { workArray: workArray });
+    }
+  });
 });
 
 app.get("/blog", (req, res) => {
@@ -472,10 +494,50 @@ app.post("/create-new-blogpost", (req, res) => {
   });
 });
 
-app.get("/admin/:id/:password", (req, res) => {
+app.post("/create-new-testimonial", (req, res) => {
+  // creating testimonial
+  var newTestimonial = new Testimonial({
+    name: req.body.name,
+    designation: req.body.designation,
+    image: req.body.image,
+    description: req.body.description,
+  });
+  //save this in testimonial collection and redirect to home page
+  newTestimonial.save((err, testimonial) => {
+    if (err) console.log(err);
+    else {
+      res.redirect("/");
+    }
+  });
+});
+app.post("/create-new-work", (req, res) => {
+  // creating work
+  var newWork = new Work({
+    name: req.body.name,
+    category: req.body.category,
+    image: req.body.image,
+    description: req.body.description,
+  });
+  //save this in testimonial collection and redirect to home page
+  newWork.save((err, work) => {
+    if (err) console.log(err);
+    else {
+      res.redirect("/");
+    }
+  });
+});
+
+app.get("/admin", (req, res) => {
+  res.render("admin", { status: false });
+});
+app.post("/admin-login", (req, res) => {
   var adminId = "cc1BkAATqxf52oZo2P3q";
   var adminPassword = "ws1WQAMwap4tPJQFEHo0";
-  if (req.params.id == adminId && req.params.password == adminPassword)
-    res.render("admin");
-  else res.render("home");
+  var name = req.body.name;
+  var password = req.body.password;
+  if (adminId == name && adminPassword == password) {
+    res.render("admin", { status: true });
+  } else {
+    res.redirect("/admin");
+  }
 });
