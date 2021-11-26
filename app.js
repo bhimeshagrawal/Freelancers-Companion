@@ -213,7 +213,7 @@ app.post("/register", function (req, res) {
         var errp = {
           message: "Email or username already exist",
         };
-        res.redirect("/register", { err: errp });
+        res.render("register", { err: errp });
       } else {
         var temp = {
           firstName: req.body.firstName,
@@ -442,14 +442,26 @@ app.post("/contactus", (req, res) => {
 app.get("/features", (req, res) => {
   res.render("features");
 });
-
 app.get("/ourwork", (req, res) => {
-  Work.find({}, (err, workArray) => {
-    if (err) console.log(err);
-    else {
-      res.render("ourwork", { workArray: workArray });
-    }
-  });
+  res.redirect("/ourwork/all");
+});
+app.get("/ourwork/:category", (req, res) => {
+  var category = req.params.category.toLowerCase();
+  if (category == "all") {
+    Work.find({}, (err, workArray) => {
+      if (err) console.log(err);
+      else {
+        res.render("ourwork", { workArray: workArray, category: "all" });
+      }
+    });
+  } else {
+    Work.find({ category: category }, (err, workArray) => {
+      if (err) console.log(err);
+      else {
+        res.render("ourwork", { workArray: workArray, category: category });
+      }
+    });
+  }
 });
 
 app.get("/blog", (req, res) => {
