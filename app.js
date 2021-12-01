@@ -19,13 +19,15 @@ const Blog = require("./models/blog");
 const Testimonial = require("./models/testimonial");
 const Work = require("./models/work");
 const cors = require("cors");
+const Razorpay = require("razorpay");
 const { post } = require("request");
 const work = require("./models/work");
 const testimonial = require("./models/testimonial");
 const stripe = require("stripe")(
   "sk_test_51JwJKnSFuvwOm214HyYFDvWLu3Z1i9iN6niF53o0pQ55XDiIm3ujVLkczIH3y9BrZZyBq8djfcFHTtJJ6oapccTX00sCaU1a32"
 );
-const YOUR_DOMAIN = "http://pure-journey-78047.herokuapp.com";
+// const YOUR_DOMAIN = "http://localhost:3000";
+const YOUR_DOMAIN = "https://pure-journey-78047.herokuapp.com";
 const buildLength = {
   starter: 2,
   basic: 6,
@@ -36,7 +38,10 @@ const priceId = {
   basic: "price_1Jx4EISFuvwOm2142FiFAS5z",
   plus: "price_1Jx4ExSFuvwOm214oxPLIp9i",
 };
-
+const razorpay = new Razorpay({
+  key_id: "rzp_test_Au3uO8cawOO3zg",
+  key_secret: "T2FCQvjSE7WbhlNQHeuT2sdU",
+});
 /*
 ==========================================
 CONFIGURATIONS
@@ -105,45 +110,55 @@ function isLoggedInOnlyForHomePage(req, res, next) {
   return next();
 }
 
+app.get("/howitworks", (req, res) => {
+  res.render("howitworks");
+});
+
 app.get("/pricing", (req, res) => {
   res.render("pricing");
 });
+
+function updateSub(user) {
+  return new Promise((resolve) => {
+    const customer = stripe.customers
+      .retrieve(user.stripeId, {
+        expand: ["subscriptions"],
+      })
+      .then((sub) => {
+        // console.log(sub.subscriptions.data[0].plan);
+        if (!sub.subscriptions.data[0]) {
+          user.currentPlan = "";
+        } else {
+          if (sub.subscriptions.data[0].plan.id == priceId.starter) {
+            tempPlan = "Starter";
+          } else if (sub.subscriptions.data[0].plan.id == priceId.basic) {
+            tempPlan = "Basic";
+          } else if (sub.subscriptions.data[0].plan.id == priceId.plus) {
+            tempPlan = "Plus";
+          } else {
+            tempPlan = "";
+          }
+        }
+        User.findOne({ email: user.email }, function (err, foundUser) {
+          if (err) console.log(err);
+          else {
+            foundUser.currentPlan = tempPlan;
+            foundUser.save(function (err, data) {
+              if (err) console.log(err);
+              else resolve(foundUser);
+            });
+          }
+        });
+      });
+  });
+}
+
 // show dashboard page
 app.get("/dashboard", isLoggedIn, async function (req, res) {
   // getting users current plan
-  const customer = await stripe.customers
-    .retrieve(req.user.stripeId, {
-      expand: ["subscriptions"],
-    })
-    .then((sub) => {
-      // console.log(sub.subscriptions.data[0].plan);
-      var tempPlan = "";
-      if (!sub.subscriptions.data[0]) {
-        req.user.currentPlan = "";
-      } else {
-        if (sub.subscriptions.data[0].plan.id == priceId.starter) {
-          tempPlan = "Starter";
-        } else if (sub.subscriptions.data[0].plan.id == priceId.basic) {
-          tempPlan = "Basic";
-        } else if (sub.subscriptions.data[0].plan.id == priceId.plus) {
-          tempPlan = "Plus";
-        } else {
-          tempPlan = "";
-        }
-      }
-      User.findOne({ email: req.user.email }, function (err, foundUser) {
-        if (err) console.log(err);
-        else {
-          foundUser.currentPlan = tempPlan;
-          foundUser.save(function (err, data) {
-            if (err) console.log(err);
-          });
-        }
-      });
-    });
-
+  const currentUser = await updateSub(req.user);
   // populating its posts and rendering dashboard
-  User.findOne({ email: req.user.email })
+  User.findOne({ email: currentUser.email })
     .populate("projects")
     .exec(function (err, user) {
       if (err) console.log(err);
@@ -257,12 +272,15 @@ app.post("/register", function (req, res) {
 app.get("/login", function (req, res) {
   res.render("login");
 });
+app.get("/login_err", (req, res) => {
+  res.render("login_err");
+});
 // handling login logic
 app.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/dashboard",
-    failureRedirect: "/login",
+    failureRedirect: "/login_err",
   }),
   function (req, res) {}
 );
@@ -315,7 +333,7 @@ app.post("/create-portal-session", async (req, res) => {
   const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
   // This is the url to which the customer will be redirected when they are done
   // managing their billing with the portal.
-  const returnUrl = YOUR_DOMAIN;
+  const returnUrl = YOUR_DOMAIN + "/dashboard";
   const subscription = await stripe.subscriptions
     .retrieve(checkoutSession.subscription)
     .then((sub) => {
@@ -414,7 +432,7 @@ app.get("/customerportal", isLoggedIn, (req, res) => {
   const session = stripe.billingPortal.sessions
     .create({
       customer: req.user.stripeId,
-      return_url: YOUR_DOMAIN,
+      return_url: YOUR_DOMAIN + "/dashboard",
     })
     .then((sessionObject) => res.redirect(sessionObject.url));
 });

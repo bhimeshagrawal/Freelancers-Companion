@@ -75,16 +75,11 @@
                     class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-x-10 xl-grid-cols-4 gap-y-10 gap-x-6 ">
                     <% workArray.forEach( work=> { %>
                         <div
-                            class=" container mx-auto shadow-lg rounded-lg max-w-md hover:shadow-2xl transition duration-300">
-                            <img src="<%= work.image %>" alt="" class="rounded-t-lg w-full">
-                            <div class="p-6">
-                                <h1
-                                    class="md:text-1xl text-xl overflow-hidden hover:text-indigo-600 transition duration-200  font-bold text-gray-900 ">
-                                    <%= work.name %>
-                                </h1>
-                                <p class="text-gray-700 my-2 overflow-hidden hover-text-900 ">
-                                    <%= work.description.slice(0,70) %>...
-                                </p>
+                            class="container mx-auto shadow-lg rounded-lg max-w-md hover:pointer hover:border-2 hover:border-blue-700 transition duration-300">
+                            <div class="hover:border-2 hover:border-blue-700">
+                                <img src="<%= work.image %>" alt="" width="350" height="285"
+                                    class="rounded-lg hover:border-2 hover:border-blue-700"
+                                    onclick="window.open('<%= work.image %>', '_blank');">
                             </div>
                         </div>
                         <% }); %>
