@@ -118,45 +118,40 @@ app.get("/pricing", (req, res) => {
   res.render("pricing");
 });
 
-function updateSub(user) {
-  return new Promise((resolve) => {
-    const customer = stripe.customers
-      .retrieve(user.stripeId, {
-        expand: ["subscriptions"],
-      })
-      .then((sub) => {
-        // console.log(sub.subscriptions.data[0].plan);
-        if (!sub.subscriptions.data[0]) {
-          user.currentPlan = "";
-        } else {
-          if (sub.subscriptions.data[0].plan.id == priceId.starter) {
-            tempPlan = "Starter";
-          } else if (sub.subscriptions.data[0].plan.id == priceId.basic) {
-            tempPlan = "Basic";
-          } else if (sub.subscriptions.data[0].plan.id == priceId.plus) {
-            tempPlan = "Plus";
-          } else {
-            tempPlan = "";
-          }
-        }
-        User.findOne({ email: user.email }, function (err, foundUser) {
-          if (err) console.log(err);
-          else {
-            foundUser.currentPlan = tempPlan;
-            foundUser.save(function (err, data) {
-              if (err) console.log(err);
-              else resolve(foundUser);
-            });
-          }
-        });
-      });
-  });
-}
-
 // show dashboard page
 app.get("/dashboard", isLoggedIn, async function (req, res) {
   // getting users current plan
   const currentUser = await updateSub(req.user);
+  const customer = stripe.customers
+    .retrieve(user.stripeId, {
+      expand: ["subscriptions"],
+    })
+    .then((sub) => {
+      // console.log(sub.subscriptions.data[0].plan);
+      if (!sub.subscriptions.data[0]) {
+        user.currentPlan = "";
+      } else {
+        if (sub.subscriptions.data[0].plan.id == priceId.starter) {
+          tempPlan = "Starter";
+        } else if (sub.subscriptions.data[0].plan.id == priceId.basic) {
+          tempPlan = "Basic";
+        } else if (sub.subscriptions.data[0].plan.id == priceId.plus) {
+          tempPlan = "Plus";
+        } else {
+          tempPlan = "";
+        }
+      }
+      User.findOne({ email: user.email }, function (err, foundUser) {
+        if (err) console.log(err);
+        else {
+          foundUser.currentPlan = tempPlan;
+          foundUser.save(function (err, data) {
+            if (err) console.log(err);
+            else resolve(foundUser);
+          });
+        }
+      });
+    });
   // populating its posts and rendering dashboard
   User.findOne({ email: currentUser.email })
     .populate("projects")

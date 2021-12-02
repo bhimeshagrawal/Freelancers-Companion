@@ -6,6 +6,7 @@ var BlogSchema = new mongoose.Schema({
   category: String,
   description: String,
   date: String,
+  image: String,
 });
 
 module.exports = mongoose.model("Blog", BlogSchema);
