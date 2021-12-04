@@ -20,12 +20,8 @@ const Testimonial = require("./models/testimonial");
 const Work = require("./models/work");
 const cors = require("cors");
 const Razorpay = require("razorpay");
-const { post } = require("request");
 const work = require("./models/work");
 const testimonial = require("./models/testimonial");
-const stripe = require("stripe")(
-  "sk_test_51JwJKnSFuvwOm214HyYFDvWLu3Z1i9iN6niF53o0pQ55XDiIm3ujVLkczIH3y9BrZZyBq8djfcFHTtJJ6oapccTX00sCaU1a32"
-);
 // const YOUR_DOMAIN = "http://localhost:3000";
 const YOUR_DOMAIN = "https://pure-journey-78047.herokuapp.com";
 const buildLength = {
@@ -33,12 +29,12 @@ const buildLength = {
   basic: 6,
   plus: 25,
 };
-const priceId = {
-  starter: "price_1Jx4D1SFuvwOm214rIu98ukc",
-  basic: "price_1Jx4EISFuvwOm2142FiFAS5z",
-  plus: "price_1Jx4ExSFuvwOm214oxPLIp9i",
+const plans = {
+  StarterMonthly: "plan_ITGnZNHqShAfec",
+  BasicMonthly: "plan_ITGnZNHqShAfec",
+  PlusMonthly: "plan_ITGnZNHqShAfec",
 };
-const razorpay = new Razorpay({
+const instance = new Razorpay({
   key_id: "rzp_test_Au3uO8cawOO3zg",
   key_secret: "T2FCQvjSE7WbhlNQHeuT2sdU",
 });
@@ -48,12 +44,10 @@ CONFIGURATIONS
 ==========================================
 */
 const PORT = process.env.PORT || 3000;
-mongoose.connect(
-  "mongodb+srv://admin:monkeysingh@monkeysingh.ztdvu.mongodb.net/monkeysingh?retryWrites=true&w=majority",
-  (err) => {
-    if (err) console.log(err);
-    else console.log("connected");
-  }
+mongoose.connect("mongodb+srv://admin:monkeysingh@monkeysingh.ztdvu.mongodb.net/monkeysingh?retryWrites=true&w=majority", (err) => {
+  if (err) console.log(err);
+  else console.log("connected");
+}
 );
 app.use(express.json());
 app.use(cors());
@@ -63,12 +57,11 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(cookieParser("secret"));
 //PASSPORT CONFIGURATION
-app.use(
-  require("express-session")({
-    secret: "Monkey singh is best graphic designer",
-    resave: false,
-    saveUninitialized: false,
-  })
+app.use(require("express-session")({
+  secret: "Monkey singh is best graphic designer",
+  resave: false,
+  saveUninitialized: false,
+})
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -85,7 +78,6 @@ ROUTES
 ==========================================
 */
 
-// show landing page
 app.get("/", function (req, res) {
   Work.find({}, (err, workArray) => {
     if (err) console.log(err);
@@ -102,68 +94,29 @@ app.get("/", function (req, res) {
     }
   });
 });
-
-function isLoggedInOnlyForHomePage(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/dashboard");
-  }
-  return next();
-}
-
 app.get("/howitworks", (req, res) => {
   res.render("howitworks");
 });
-
 app.get("/pricing", (req, res) => {
-  res.render("pricing");
+  res.render("pricing", { plans: plans });
 });
-
-// show dashboard page
 app.get("/dashboard", isLoggedIn, async function (req, res) {
-  // getting users current plan
-  const currentUser = await updateSub(req.user);
-  const customer = stripe.customers
-    .retrieve(user.stripeId, {
-      expand: ["subscriptions"],
-    })
-    .then((sub) => {
-      // console.log(sub.subscriptions.data[0].plan);
-      if (!sub.subscriptions.data[0]) {
-        user.currentPlan = "";
-      } else {
-        if (sub.subscriptions.data[0].plan.id == priceId.starter) {
-          tempPlan = "Starter";
-        } else if (sub.subscriptions.data[0].plan.id == priceId.basic) {
-          tempPlan = "Basic";
-        } else if (sub.subscriptions.data[0].plan.id == priceId.plus) {
-          tempPlan = "Plus";
-        } else {
-          tempPlan = "";
-        }
-      }
-      User.findOne({ email: user.email }, function (err, foundUser) {
+  // populating its posts and rendering dashboard
+  User.findOne({ email: req.user.email }, (err, user) => {
+    if (isMonthlyPlan(user.plan_id) == true) {
+      // check completion date and render accordingly
+      User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
         if (err) console.log(err);
         else {
-          foundUser.currentPlan = tempPlan;
-          foundUser.save(function (err, data) {
-            if (err) console.log(err);
-            else resolve(foundUser);
-          });
+          res.render("dashboard", { user: user });
         }
       });
-    });
-  // populating its posts and rendering dashboard
-  User.findOne({ email: currentUser.email })
-    .populate("projects")
-    .exec(function (err, user) {
-      if (err) console.log(err);
-      else {
-        res.render("dashboard", { user: user });
-      }
-    });
+    }
+    else {
+      res.render("pricing", { plans: plans })
+    }
+  })
 });
-
-// create a new project
 app.post("/project", isLoggedIn, function (req, res) {
   if (
     (req.user.currentPlan == "Basic" &&
@@ -204,234 +157,55 @@ app.post("/project", isLoggedIn, function (req, res) {
     res.redirect("/dashboard");
   }
 });
-
-// AUTH ROUTES
-
-// show register form and then post to /register
 app.get("/register", function (req, res) {
   var err = {
     message: "",
   };
   res.render("register", { err: err });
 });
-//get data from register page , check for duplicate username and email and create new stripe customer and add it to db
 app.post("/register", function (req, res) {
-  User.find(
-    { $or: [{ username: req.body.username }, { email: req.body.email }] },
-    function (err, foundUsers) {
-      if (foundUsers.length != 0) {
-        var errp = {
-          message: "Email or username already exist",
-        };
-        res.render("register", { err: errp });
-      } else {
-        var temp = {
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-        };
-        //creating user in stripe
-        const customer = stripe.customers
-          .create({
-            description: "My First Test Customer (created for API docs)",
-            email: req.body.email,
-            name: req.body.username,
-            metadata: temp,
-          })
-          .then((customer) => {
-            // console.log(customer);
-            //creating user in mongodb database
-            var newUser = new User({
-              stripeId: customer.id,
-              username: customer.name,
-              firstName: customer.metadata.firstName,
-              lastName: customer.metadata.lastName,
-              email: customer.email,
-              currentPlan: "",
-            });
-            User.register(newUser, req.body.password, function (err, user) {
-              if (err) {
-                console.log(err);
-                return res.render("register", { err: err });
-              }
-              passport.authenticate("local")(req, res, function () {
-                res.redirect("/dashboard");
-              });
-            });
-          });
+  if (isUserExist(req.body.username, req.body.email) == true) {
+    var errmsg = {
+      message: "Email or username already exist",
+    };
+    res.render("register", { err: errmsg });
+  }
+  else {
+    var newUser = new User({
+      username: req.body.username,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      currentPlan: "",
+    });
+    User.register(newUser, req.body.password, function (err, user) {
+      if (err) {
+        console.log(err);
+        return res.render("register", { err: err });
       }
-    }
-  );
+      passport.authenticate("local")(req, res, function () {
+        res.redirect("/dashboard");
+      });
+    });
+  }
 });
-
-// show login form
 app.get("/login", function (req, res) {
   res.render("login");
 });
 app.get("/login_err", (req, res) => {
   res.render("login_err");
 });
-// handling login logic
-app.post(
-  "/login",
+app.post("/login",
   passport.authenticate("local", {
     successRedirect: "/dashboard",
     failureRedirect: "/login_err",
   }),
-  function (req, res) {}
+  function (req, res) { }
 );
-// logout route
 app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 });
-//check if login
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
-
-app.post("/create-checkout-session", isLoggedIn, async (req, res) => {
-  const selectedPrice = {
-    price: req.body.price,
-    quantity: 1,
-  };
-  const session = await stripe.checkout.sessions.create({
-    billing_address_collection: "required",
-    allow_promotion_codes: true,
-    payment_method_types: ["card"],
-    line_items: [selectedPrice],
-    phone_number_collection: {
-      enabled: true,
-    },
-    mode: "subscription",
-    success_url: `${YOUR_DOMAIN}/dashboard`,
-    cancel_url: `${YOUR_DOMAIN}/`,
-    customer: req.user.stripeId,
-  });
-  User.findOne({ email: req.user.email }, (err, user) => {
-    if (err) console.log(err);
-    else {
-      user.checkoutSessions.push(session);
-      user.save(function (err, user) {
-        if (err) console.log(err);
-      });
-    }
-  });
-  res.redirect(303, session.url);
-});
-app.post("/create-portal-session", async (req, res) => {
-  // For demonstration purposes, we're using the Checkout session to retrieve the customer ID.
-  // Typically this is stored alongside the authenticated user in your database.
-  const { session_id } = req.body;
-  const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
-  // This is the url to which the customer will be redirected when they are done
-  // managing their billing with the portal.
-  const returnUrl = YOUR_DOMAIN + "/dashboard";
-  const subscription = await stripe.subscriptions
-    .retrieve(checkoutSession.subscription)
-    .then((sub) => {
-      var subvalue = "";
-      if (sub.plan.id == "price_1Jx4D1SFuvwOm214rIu98ukc") subvalue = "Starter";
-      if (sub.plan.id == "price_1Jx4EISFuvwOm2142FiFAS5z") subvalue = "Basic";
-      if (sub.plan.id == "price_1Jx4ExSFuvwOm214oxPLIp9i") subvalue = "Plus";
-      //to do update mongodb
-      User.findOne({ email: req.user.email }, (err, user) => {
-        if (err) console.log(err);
-        else {
-          user.subscription = subvalue;
-          user.save(function (err, user) {
-            if (err) console.log(err);
-          });
-        }
-      });
-    });
-  const portalSession = await stripe.billingPortal.sessions.create({
-    customer: checkoutSession.customer,
-    return_url: returnUrl,
-  });
-  res.redirect(303, portalSession.url);
-});
-
-app.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
-  (request, response) => {
-    console.log(" i am running");
-    console.log(request.body);
-    const event = request.body;
-    // Replace this endpoint secret with your endpoint's unique secret
-    // If you are testing with the CLI, find the secret by running 'stripe listen'
-    // If you are using an endpoint defined with the API or dashboard, look in your webhook settings
-    // at https://dashboard.stripe.com/webhooks
-    const endpointSecret = "whsec_OPYpTXZC9MsHx3u8VoJcj2j6nZRpwQPE";
-    // Only verify the event if you have an endpoint secret defined.
-    // Otherwise use the basic event deserialized with JSON.parse
-    if (endpointSecret) {
-      // Get the signature sent by Stripe
-      const signature = request.headers["stripe-signature"];
-      try {
-        event = stripe.webhooks.constructEvent(
-          request.body,
-          signature,
-          endpointSecret
-        );
-      } catch (err) {
-        console.log(`⚠️  Webhook signature verification failed.`, err.message);
-        return response.sendStatus(400);
-      }
-    }
-    let subscription;
-    let status;
-    // Handle the event
-    switch (event.type) {
-      case "customer.subscription.trial_will_end":
-        subscription = event.data.object;
-        status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
-        // Then define and call a method to handle the subscription trial ending.
-        // handleSubscriptionTrialEnding(subscription);
-        break;
-      case "customer.subscription.deleted":
-        subscription = event.data.object;
-        status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
-        // Then define and call a method to handle the subscription deleted.
-        // handleSubscriptionDeleted(subscriptionDeleted);
-        break;
-      case "customer.subscription.created":
-        subscription = event.data.object;
-        status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
-        // Then define and call a method to handle the subscription created.
-        // handleSubscriptionCreated(subscription);
-        break;
-      case "customer.subscription.updated":
-        subscription = event.data.object;
-        status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
-        // Then define and call a method to handle the subscription update.
-        // handleSubscriptionUpdated(subscription);
-        break;
-      default:
-        // Unexpected event type
-        console.log(`Unhandled event type ${event.type}.`);
-    }
-    // Return a 200 response to acknowledge receipt of the event
-    response.send();
-  }
-);
-
-app.get("/customerportal", isLoggedIn, (req, res) => {
-  const session = stripe.billingPortal.sessions
-    .create({
-      customer: req.user.stripeId,
-      return_url: YOUR_DOMAIN + "/dashboard",
-    })
-    .then((sessionObject) => res.redirect(sessionObject.url));
-});
-
 app.get("/contactus", (req, res) => {
   res.render("contactus", { isQuerySubmitted: false });
 });
@@ -476,7 +250,6 @@ app.get("/ourwork/:category", (req, res) => {
     });
   }
 });
-
 app.get("/blog", (req, res) => {
   //find all blogs , make array and render all blogs
   Blog.find({}, (err, blogPostArray) => {
@@ -486,15 +259,6 @@ app.get("/blog", (req, res) => {
     }
   });
 });
-// app.get("/blog/:id", (req, res) => {
-//   //get blog post from given req.params.id and render it to the blogpost page
-//   Blog.findOne({ _id: req.params.id }, (err, blogPost) => {
-//     if (err) console.log(err);
-//     else {
-//       res.render("blogpost", { blogPost: blogPost });
-//     }
-//   });
-// });
 app.post("/create-new-blogpost", (req, res) => {
   // getting todays date
   var today = new Date();
@@ -518,7 +282,6 @@ app.post("/create-new-blogpost", (req, res) => {
     }
   });
 });
-
 app.post("/create-new-testimonial", (req, res) => {
   // creating testimonial
   var newTestimonial = new Testimonial({
@@ -551,7 +314,6 @@ app.post("/create-new-work", (req, res) => {
     }
   });
 });
-
 app.get("/admin", (req, res) => {
   res.render("admin", { status: false });
 });
@@ -566,3 +328,100 @@ app.post("/admin-login", (req, res) => {
     res.redirect("/admin");
   }
 });
+let sub_id;
+let subscriptionObj;
+let selected_plan_id;
+let total_count_var;
+app.get("/checkout", isLoggedIn, (req, res) => {
+  res.render("checkout")
+})
+app.post("/create-checkout-session", isLoggedIn, (req, res) => {
+  selected_plan_id = req.body.plan
+  res.redirect("/checkout")
+})
+app.post("/one-time-access", isLoggedIn, (req, res) => {
+  if (selected_plan_id == plans.BasicMonthly || selected_plan_id == plans.StarterMonthly || selected_plan_id == plans.PlusMonthly)
+    total_count_var = 1;
+  const params =
+  {
+    plan_id: selected_plan_id,
+    customer_notify: 1,
+    quantity: 1,
+    total_count: total_count_var,
+  }
+  instance.subscriptions.create(params, (err, response) => {
+    subscriptionObj = response
+    console.log(response)
+    sub_id = response.id;
+    res.json(response)
+  })
+})
+app.post("/verify", (req, res) => {
+  instance.payments.fetch(req.body.razorpay_payment_id).then((paymenyDocument) => {
+    console.log(paymenyDocument)
+    if (paymenyDocument.status == "captured" || paymenyDocument.status == "authorized") {
+      // transaction successful
+      // save sub id to user database and payment id to database , and from plan id save plan name to database
+      User.findOne({ email: req.user.email }, (err, user) => {
+        if (err) console.log(err)
+        else {
+          user.subscriptionId = sub_id;
+          user.plan_id = selected_plan_id;
+          user.created_at = paymenyDocument.created_at
+          user.save(function (err, user) {
+            if (err) console.log(err)
+          })
+        }
+      })
+      res.redirect("/dashboard")
+    }
+    else {
+      res.send("Waiting for transaction to be successful")
+    }
+  })
+})
+
+
+
+
+function isUserExist(userName, userEmail) {
+  User.find({ $or: [{ username: userName }, { email: userEmail }] }, (err, foundUsers) => {
+    if (foundUsers.length != 0)
+      return true;
+    return false;
+  }
+  );
+}
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
+function findPlanName(plan_id) {
+  var planName
+  if (plan_id == plans.StarterMonthly)
+    planName = "Starter - Monthly"
+  if (plan_id == plans.BasicMonthly)
+    planName = "Basic - Monthly"
+  if (plan_id == plans.PlusMonthly)
+    planName = "Plus - Monthly"
+  if (plan_id == plans.StarterQuarterly)
+    planName = "Starter - Quarterly"
+  if (plan_id == plans.BasicQuarterly)
+    planName = "Basic - Quarterly"
+  if (plan_id == plans.PlusQuarterly)
+    planName = "Plus - Quarterly"
+  if (plan_id == plans.StarterYearly)
+    planName = "Starter - Yearly"
+  if (plan_id == plans.BasicYearly)
+    planName = "Basic - Yearly"
+  if (plan_id == plans.PlusYearly)
+    planName = "Plus - Yearly"
+  return planName;
+}
+function isMonthlyPlan(plan_id) {
+  if (plan_id == plans.StarterMonthly || plan_id == plans.BasicMonthly || plan_id == plans.PlusMonthly)
+    return true;
+  return false;
+}

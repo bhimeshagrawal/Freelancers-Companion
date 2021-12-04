@@ -2,15 +2,20 @@ var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 
 var UserSchema = new mongoose.Schema({
-  stripeId: String,
+  customerId: String,
   firstName: String,
   lastName: String,
   email: String,
   username: String,
   password: String,
-  subscription: Object,
+  subscriptionId: String,
+  subscriptionStatus: String,
+  remaining_count: String,
+  created_at: Number,
+  end_at: Number,
+  plan_id: String,
   currentPlan: String,
-  checkoutSessions: Array,
+  paymentId: String,
   projects: [
     {
       type: mongoose.Schema.Types.ObjectId,
