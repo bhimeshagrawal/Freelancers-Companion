@@ -24,6 +24,19 @@
 <body>
     <%- include("partials/header.ejs") %>
         <section>
+            <style>
+                .tab button.active {
+                    background-color: blue;
+                    opacity: 0.8;
+                    color: white;
+                    transition: all 1s;
+                }
+
+                .tabcontent {
+                    display: none;
+                }
+            </style>
+
             <!-- written block -->
             <div
                 class="flex flex-col pt-20 items-center leading-7 text-center text-gray-900 border-0 border-gray-200 mb-16">
@@ -35,7 +48,16 @@
                     Pricing to fit the needs of any company size.
                 </p>
             </div>
+
             <!-- Tab links -->
+            <div class="flex justify-center text-center">
+                <div class="flex flex-row">
+                    <p class="px-6">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                    <p class="text-red-700 px-6 italic">&nbsp;&nbsp;&nbsp;&nbsp;Save 15% </p>
+                    <p class="text-red-700 px-6 italic"> Save 25% &nbsp;&nbsp;</p>
+                </div>
+            </div>
             <div class="tab flex justify-center text-center">
                 <div class="border bg-gray-50 rounded-full flex flex-row ">
                     <button class="tablinks hover:bg-gray-100 text-xl px-6 py-2 rounded-full"
@@ -47,6 +69,7 @@
                 </div>
             </div>
 
+            <!-- plans -->
             <div id="Monthly" class="tabcontent">
                 <section class="py-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-24">
                     <div class="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl">
@@ -62,7 +85,7 @@
                                 </h3>
                                 <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
                                     <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
-                                        5000
+                                        3449
                                     </p>
                                     <p class="box-border m-0 border-solid" style="border-image: initial;">
                                         INR/ month
@@ -82,7 +105,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        2 Builds
+                                        1 Daily Active Request
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -93,7 +116,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Faster Processing
+                                        Unlimited Brands
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -104,7 +127,51 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Customisations
+                                        7 Requests
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        2 Revisions
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        24-48 Hours* Output
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Inlcludes Print & Digital Graphic Designs
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Email Support
                                     </li>
                                 </ul>
                                 <form action="/create-checkout-session" method="post">
@@ -124,7 +191,7 @@
                                 </h3>
                                 <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
                                     <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
-                                        10,000
+                                        14,999
                                     </p>
                                     <p class="box-border m-0 border-solid" style="border-image: initial;">
                                         INR/ month
@@ -155,7 +222,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        6 Builds
+                                        Unlimited Requests
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -166,7 +233,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Progress Reports
+                                        Unlimited Revisions
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -177,7 +244,29 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Premium Support
+                                        24 Hours* Output
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Dedicated Designer
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Also Includes Logo Creation
                                     </li>
                                 </ul>
                                 <form action="/create-checkout-session" method="post">
@@ -197,7 +286,7 @@
                                 </h3>
                                 <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
                                     <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
-                                        25,000
+                                        24,999
                                     </p>
                                     <p class="box-border m-0 border-solid" style="border-image: initial;">
                                         INR/ month
@@ -228,7 +317,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        25 Builds
+                                        2 Requests
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -239,7 +328,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Advanced Analytics
+                                        Unlimited Revisions
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -250,7 +339,18 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Company Evaluations
+                                        Also Includes GIFs
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Also Includes Motion Video
                                     </li>
                                 </ul>
                                 <form action="/create-checkout-session" method="post">
@@ -280,8 +380,17 @@
                                     Starter
                                 </h3>
                                 <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
+                                    <p
+                                        class="box-border m-0 text-3xl line-through font-semibold leading-none border-solid">
+                                        3449
+                                    </p>
+                                    <p class="box-border m-0 border-solid" style="border-image: initial;">
+                                        INR/ month
+                                    </p>
+                                </div>
+                                <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
                                     <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
-                                        5000
+                                        2931
                                     </p>
                                     <p class="box-border m-0 border-solid" style="border-image: initial;">
                                         INR/ month
@@ -301,7 +410,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        2 Builds
+                                        1 Daily Active Request
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -312,7 +421,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Faster Processing
+                                        Unlimited Brands
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -323,11 +432,55 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Customisations
+                                        7 Requests
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        2 Revisions
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        24-48 Hours* Output
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Inlcludes Print & Digital Graphic Designs
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Email Support
                                     </li>
                                 </ul>
                                 <form action="/create-checkout-session" method="post">
-                                    <input hidden name="price" id="" value="price_1Jx4D1SFuvwOm214rIu98ukc">
+                                    <input hidden name="plan" id="" value="<%= plans.StarterQuarterly %>">
                                     <button
                                         class="inline-flex justify-center w-full px-4 py-3 mt-8 font-sans text-sm leading-none text-center text-blue-600 no-underline bg-transparent border border-blue-600 rounded-md cursor-pointer hover:bg-blue-700 hover:border-blue-700 hover:text-white focus-within:bg-blue-700 focus-within:border-blue-700 focus-within:text-white sm:text-base md:text-lg">
                                         Select Plan
@@ -342,8 +495,17 @@
                                     Basic
                                 </h3>
                                 <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
+                                    <p
+                                        class="box-border m-0 text-3xl line-through font-semibold leading-none border-solid">
+                                        14,999
+                                    </p>
+                                    <p class="box-border m-0 border-solid" style="border-image: initial;">
+                                        INR/ month
+                                    </p>
+                                </div>
+                                <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
                                     <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
-                                        10,000
+                                        12,750
                                     </p>
                                     <p class="box-border m-0 border-solid" style="border-image: initial;">
                                         INR/ month
@@ -374,7 +536,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        6 Builds
+                                        Unlimited Requests
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -385,7 +547,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Progress Reports
+                                        Unlimited Revisions
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -396,11 +558,33 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Premium Support
+                                        24 Hours* Output
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Dedicated Designer
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Also Includes Logo Creation
                                     </li>
                                 </ul>
                                 <form action="/create-checkout-session" method="post">
-                                    <input hidden name="price" id="" value="price_1Jx4EISFuvwOm2142FiFAS5z">
+                                    <input hidden name="plan" id="" value="<%= plans.BasicQuarterly %>">
                                     <button
                                         class="inline-flex justify-center w-full px-4 py-3 mt-8 font-sans text-sm leading-none text-center text-white no-underline bg-blue-600 border rounded-md cursor-pointer hover:bg-blue-700 hover:border-blue-700 hover:text-white focus-within:bg-blue-700 focus-within:border-blue-700 focus-within:text-white sm:text-base md:text-lg">
                                         Select Plan
@@ -415,8 +599,17 @@
                                     Plus
                                 </h3>
                                 <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
+                                    <p
+                                        class="box-border m-0 text-3xl line-through font-semibold leading-none border-solid">
+                                        24,999
+                                    </p>
+                                    <p class="box-border m-0 border-solid" style="border-image: initial;">
+                                        INR/ month
+                                    </p>
+                                </div>
+                                <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
                                     <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
-                                        25,000
+                                        21,249
                                     </p>
                                     <p class="box-border m-0 border-solid" style="border-image: initial;">
                                         INR/ month
@@ -447,7 +640,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        25 Builds
+                                        2 Requests
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -458,7 +651,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Advanced Analytics
+                                        Unlimited Revisions
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -469,11 +662,22 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Company Evaluations
+                                        Also Includes GIFs
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Also Includes Motion Video
                                     </li>
                                 </ul>
                                 <form action="/create-checkout-session" method="post">
-                                    <input type="text" hidden name="price" id="" value="price_1Jx4ExSFuvwOm214oxPLIp9i">
+                                    <input type="text" hidden name="plan" id="" value="<%= plans.PlusQuarterly %>">
                                     <button
                                         class="inline-flex justify-center w-full px-4 py-3 mt-8 font-sans text-sm leading-none text-center text-blue-600 no-underline bg-transparent border border-blue-600 rounded-md cursor-pointer hover:bg-blue-700 hover:border-blue-700 hover:text-white focus-within:bg-blue-700 focus-within:border-blue-700 focus-within:text-white sm:text-base md:text-lg">
                                         Select Plan
@@ -499,8 +703,17 @@
                                     Starter
                                 </h3>
                                 <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
+                                    <p
+                                        class="box-border m-0 text-3xl line-through font-semibold leading-none border-solid">
+                                        3449
+                                    </p>
+                                    <p class="box-border m-0 border-solid" style="border-image: initial;">
+                                        INR/ month
+                                    </p>
+                                </div>
+                                <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
                                     <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
-                                        5000
+                                        2586
                                     </p>
                                     <p class="box-border m-0 border-solid" style="border-image: initial;">
                                         INR/ month
@@ -520,7 +733,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        2 Builds
+                                        1 Daily Active Request
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -531,7 +744,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Faster Processing
+                                        Unlimited Brands
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -542,11 +755,55 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Customisations
+                                        7 Requests
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        2 Revisions
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        24-48 Hours* Output
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Inlcludes Print & Digital Graphic Designs
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Email Support
                                     </li>
                                 </ul>
                                 <form action="/create-checkout-session" method="post">
-                                    <input hidden name="price" id="" value="price_1Jx4D1SFuvwOm214rIu98ukc">
+                                    <input hidden name="plan" id="" value="<%= plans.StarterYearly %>">
                                     <button
                                         class="inline-flex justify-center w-full px-4 py-3 mt-8 font-sans text-sm leading-none text-center text-blue-600 no-underline bg-transparent border border-blue-600 rounded-md cursor-pointer hover:bg-blue-700 hover:border-blue-700 hover:text-white focus-within:bg-blue-700 focus-within:border-blue-700 focus-within:text-white sm:text-base md:text-lg">
                                         Select Plan
@@ -561,8 +818,17 @@
                                     Basic
                                 </h3>
                                 <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
+                                    <p
+                                        class="box-border m-0 text-3xl line-through font-semibold leading-none border-solid">
+                                        14,999
+                                    </p>
+                                    <p class="box-border m-0 border-solid" style="border-image: initial;">
+                                        INR/ month
+                                    </p>
+                                </div>
+                                <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
                                     <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
-                                        10,000
+                                        11,249
                                     </p>
                                     <p class="box-border m-0 border-solid" style="border-image: initial;">
                                         INR/ month
@@ -593,7 +859,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        6 Builds
+                                        Unlimited Requests
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -604,7 +870,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Progress Reports
+                                        Unlimited Revisions
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -615,11 +881,33 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Premium Support
+                                        24 Hours* Output
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Dedicated Designer
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Also Includes Logo Creation
                                     </li>
                                 </ul>
                                 <form action="/create-checkout-session" method="post">
-                                    <input hidden name="price" id="" value="price_1Jx4EISFuvwOm2142FiFAS5z">
+                                    <input hidden name="plan" id="" value="<%= plans.BasicYearly %>">
                                     <button
                                         class="inline-flex justify-center w-full px-4 py-3 mt-8 font-sans text-sm leading-none text-center text-white no-underline bg-blue-600 border rounded-md cursor-pointer hover:bg-blue-700 hover:border-blue-700 hover:text-white focus-within:bg-blue-700 focus-within:border-blue-700 focus-within:text-white sm:text-base md:text-lg">
                                         Select Plan
@@ -634,8 +922,17 @@
                                     Plus
                                 </h3>
                                 <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
+                                    <p
+                                        class="box-border m-0 text-3xl line-through font-semibold leading-none border-solid">
+                                        24,999
+                                    </p>
+                                    <p class="box-border m-0 border-solid" style="border-image: initial;">
+                                        INR/ month
+                                    </p>
+                                </div>
+                                <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
                                     <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
-                                        25,000
+                                        18,749
                                     </p>
                                     <p class="box-border m-0 border-solid" style="border-image: initial;">
                                         INR/ month
@@ -666,7 +963,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        25 Builds
+                                        2 Requests
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -677,7 +974,7 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Advanced Analytics
+                                        Unlimited Revisions
                                     </li>
                                     <li
                                         class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
@@ -688,11 +985,22 @@
                                                 d="M5 13l4 4L19 7">
                                             </path>
                                         </svg>
-                                        Company Evaluations
+                                        Also Includes GIFs
+                                    </li>
+                                    <li
+                                        class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                                        <svg class="w-5 h-5 mr-2 font-semibold leading-7 text-blue-600 sm:h-5 sm:w-5 md:h-6 md:w-6"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7">
+                                            </path>
+                                        </svg>
+                                        Also Includes Motion Video
                                     </li>
                                 </ul>
                                 <form action="/create-checkout-session" method="post">
-                                    <input type="text" hidden name="price" id="" value="price_1Jx4ExSFuvwOm214oxPLIp9i">
+                                    <input type="text" hidden name="plan" id="" value="<%= plans.PlusYearly %>">
                                     <button
                                         class="inline-flex justify-center w-full px-4 py-3 mt-8 font-sans text-sm leading-none text-center text-blue-600 no-underline bg-transparent border border-blue-600 rounded-md cursor-pointer hover:bg-blue-700 hover:border-blue-700 hover:text-white focus-within:bg-blue-700 focus-within:border-blue-700 focus-within:text-white sm:text-base md:text-lg">
                                         Select Plan
@@ -703,6 +1011,8 @@
                     </div>
                 </section>
             </div>
+
+
             <script>
                 function openTab(evt, tabName) {
                     var i, tabcontent, tablinks;
