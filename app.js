@@ -384,7 +384,9 @@ let sub_id;
 let selected_plan_id;
 let total_count_var;
 app.get("/checkout", isLoggedIn, (req, res) => {
-  res.render("checkout")
+  User.findOne({ email: req.user.email }, (err, user) => {
+    res.render("checkout", { user: user })
+  })
 })
 app.post("/create-checkout-session", isLoggedIn, (req, res) => {
   selected_plan_id = req.body.plan
