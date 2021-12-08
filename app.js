@@ -22,6 +22,8 @@ const cors = require("cors");
 const Razorpay = require("razorpay");
 const work = require("./models/work");
 const testimonial = require("./models/testimonial");
+const nodemailer = require("nodemailer")
+const path = require('path');
 const { off } = require("./models/user");
 // const YOUR_DOMAIN = "http://localhost:3000";
 const YOUR_DOMAIN = "https://pure-journey-78047.herokuapp.com";
@@ -54,7 +56,7 @@ CONFIGURATIONS
 ==========================================
 */
 const PORT = process.env.PORT || 3000;
-mongoose.connect("mongodb+srv://admin:monkeysingh@monkeysingh.ztdvu.mongodb.net/monkeysingh?retryWrites=true&w=majority", (err) => {
+mongoose.connect("mongodb+srv://monkeysingh:monkeysingh@monkeysingh.6arno.mongodb.net/monkeysingh?retryWrites=true&w=majority", (err) => {
   if (err) console.log(err);
   else console.log("connected");
 }
@@ -81,6 +83,22 @@ passport.deserializeUser(User.deserializeUser());
 app.listen(PORT, function () {
   console.log(`Server Started at port ${PORT}`);
 });
+var email, username, firstName, lastName, password;
+let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  service: 'Gmail',
+  auth: {
+    type: 'OAuth2',
+    user: 'monkeysinghindia@gmail.com',
+    pass: 'monkey@123',
+    clientId: process.env.OAUTH_CLIENTID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    refreshToken: process.env.OAUTH_REFRESH_TOKEN
+  }
+});
+
 
 /*
 ==========================================
@@ -213,32 +231,77 @@ app.get("/register", function (req, res) {
   var err = {
     message: "",
   };
-  res.render("register", { err: err });
+  res.render("register", { err: err.message });
 });
 app.post("/register", function (req, res) {
   if (isUserExist(req.body.username, req.body.email) == true) {
     var errmsg = {
       message: "Email or username already exist",
     };
-    res.render("register", { err: errmsg });
+    res.render("register", { err: errmsg.message });
   }
   else {
-    var newUser = new User({
-      username: req.body.username,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      currentPlan: "",
+    username = req.body.username
+    firstName = req.body.firstName
+    lastName = req.body.lastName
+    email = req.body.email
+    password = req.body.password
+    //generating random otp
+    var otp = Math.random();
+    otp = otp * 1000000;
+    otp = parseInt(otp);
+    console.log(otp);
+    // send mail with defined transport object
+    var mailOptions = {
+      to: req.body.email,
+      subject: "Otp for registration is: ",
+      html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + otp + "</h1>" // html body
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+      res.render('otp', { err: "" });
     });
-    User.register(newUser, req.body.password, function (err, user) {
+  }
+});
+app.post('/resend', function (req, res) {
+  var mailOptions = {
+    to: email,
+    subject: "Otp for registration is: ",
+    html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + otp + "</h1>" // html body
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    res.render('otp', { err: "otp has been sent" });
+  });
+});
+app.post('/verify', function (req, res) {
+  if (req.body.otp == otp) {
+    var newUser = new User({
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+    });
+    User.register(newUser, password, function (err, user) {
       if (err) {
         console.log(err);
-        return res.render("register", { err: err });
+        return res.render("register", { err: err.message });
       }
       passport.authenticate("local")(req, res, function () {
         res.redirect("/dashboard");
       });
     });
+  }
+  else {
+    res.render('otp', { err: 'otp is incorrect' });
   }
 });
 app.get("/login", function (req, res) {
