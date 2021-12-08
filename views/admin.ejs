@@ -13,7 +13,7 @@
 
     <% if(status==true){ %>
         <section class="flex flex-wrap justify-around gap-8 p-4">
-            <!-- add new blog post  -->
+            <!-- add new testimonial  -->
             <div class="flex flex-wrap items-center justify-around h-screen">
                 <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
                     <div class=" mt-10">
@@ -34,27 +34,7 @@
                     </form>
                 </div>
             </div>
-            <!-- add new testimonial  -->
-            <div class="flex flex-wrap items-center justify-around h-screen">
-                <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
-                    <div class=" mt-10">
-                        <h1 class="font-bold text-4xl">Add Blog</h1>
-                        <p class="font-semibold">Paste the content and submit</p>
-                    </div>
-                    <form action="/create-new-blogpost" method="post" class="flex flex-col space-y-8 mt-10">
-                        <input type="text" placeholder="Title" name="title"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Author" name="author"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Category" name="category"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="description" name="description"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <button
-                            class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
-                    </form>
-                </div>
-            </div>
+
             <!-- add new portfolio work  -->
             <div class="flex flex-wrap items-center justify-around h-screen">
                 <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">

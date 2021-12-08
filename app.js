@@ -26,6 +26,7 @@ const path = require('path');
 const { off } = require("./models/user");
 const sgMail = require('@sendgrid/mail')
 
+
 // const YOUR_DOMAIN = "http://localhost:3000";
 const YOUR_DOMAIN = "https://pure-journey-78047.herokuapp.com";
 const buildLength = {
