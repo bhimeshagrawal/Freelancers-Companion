@@ -119,62 +119,61 @@ app.get("/pricing", (req, res) => {
 });
 app.get("/dashboard", isLoggedIn, async function (req, res) {
   // populating its posts and rendering dashboard
-  User.findOne({ email: req.user.email }, (err, user) => {
-    // monthly plan 
-    // console.log(user)
-    if (isMonthlyPlan(user.plan_id) == true) {
-      instance.subscriptions.fetch(user.subscriptionId).then((response) => {
-        var currentTimeInSeconds = Math.floor(Date.now() / 1000);
-        // monthly active plan
-        if (response.status == "completed" && response.current_end > currentTimeInSeconds) {
-          user.end_at == response.current_end
-          user.subscriptionStatus = "active";
-          user.currentPlan = findPlanName(response.plan_id)
-          user.save()
-          User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
-            if (err) console.log(err);
-            else {
-              res.render("dashboard", { user: user });
-            }
-          });
-        }
-        //monthly inactive plan
+  let user = await User.findOne({ email: req.user.email })
+  // monthly plan 
+  if (isMonthlyPlan(user.plan_id) == true) {
+    let response = await instance.subscriptions.fetch(user.subscriptionId)
+    var currentTimeInSeconds = Math.floor(Date.now() / 1000);
+    // monthly active plan
+    if (response.status == "completed" && response.current_end > currentTimeInSeconds) {
+      user.end_at == response.current_end
+      user.subscriptionStatus = "active";
+      user.currentPlan = findPlanName(response.plan_id)
+      await user.save()
+      User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
+        if (err) console.log(err);
         else {
-          user.subscriptionStatus = "expired";
-          user.currentPlan = "";
-          user.save()
-          res.render("pricing", { plans: plans })
+          res.render("dashboard", { user: user });
         }
-      })
+      });
     }
-    //quarterly or yearly plan
-    else if (isQuarterlyOrYearlyPlan(user.plan_id) == true) {
-      instance.subscriptions.fetch(user.subscriptionId).then((response) => {
-        if (response.plan_id == user.plan_id && response.status == "active") {
-          user.currentPlan = findPlanName(user.plan_id)
-          user.customerId = response.customer_id
-          user.subscriptionStatus = response.status
-          user.save()
-          // check completion date and render accordingly
-          User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
-            if (err) console.log(err);
-            else {
-              res.render("dashboard", { user: user });
-            }
-          });
-        }
-        else {
-          user.currentPlan = "";
-          user.subscriptionStatus = "expired"
-          user.save()
-          res.render("pricing", { plans: plans })
-        }
-      })
-    }
+    //monthly inactive plan
     else {
+      user.subscriptionStatus = "expired";
+      user.currentPlan = "";
+      await user.save()
       res.render("pricing", { plans: plans })
     }
-  })
+  }
+  //quarterly or yearly plan
+  else if (isQuarterlyOrYearlyPlan(user.plan_id) == true) {
+    let response = await instance.subscriptions.fetch(user.subscriptionId)
+    //active plan
+    if (response.plan_id == user.plan_id && response.status == "active") {
+      user.currentPlan = findPlanName(user.plan_id)
+      user.customerId = response.customer_id
+      user.subscriptionStatus = response.status
+      await user.save()
+      // check completion date and render accordingly
+      User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
+        if (err) console.log(err);
+        else {
+          res.render("dashboard", { user: user });
+        }
+      });
+    }
+    //inactive
+    else {
+      user.currentPlan = "";
+      user.subscriptionStatus = "expired"
+      await user.save()
+      res.render("pricing", { plans: plans })
+    }
+  }
+  //no plan
+  else {
+    res.render("pricing", { plans: plans })
+  }
 });
 app.post("/project", isLoggedIn, function (req, res) {
   // getting todays date
@@ -294,7 +293,7 @@ app.get("/forgotpassword", (req, res) => {
   res.render("forgotpassword", { err: "" })
 })
 app.post("/sendotpforgotpassword", (req, res) => {
-  email = req.body.email
+  tempdetails.email = req.body.email
   //generate random otp
   tempdetails.otp = generateOTP();
   // send mail with defined transport object
@@ -313,6 +312,7 @@ app.post("/sendotpforgotpassword", (req, res) => {
     .catch((error) => {
       console.error(error)
     })
+  res.render("otpforgotpassword", { err: "" })
 })
 app.post("/verifyotpforgotpassword", (req, res) => {
   if (req.body.otp == tempdetails.otp) {
@@ -325,7 +325,8 @@ app.post("/verifyotpforgotpassword", (req, res) => {
 app.post("/changepassword", (req, res) => {
   User.findOne({ email: tempdetails.email }, (err, user) => {
     user.setPassword(req.body.password, function (err, user) {
-      res.send("<h3>Password has been updated</h3><p>Kindly Login Now to access Dashboard</p>")
+      user.save()
+      res.redirect("/dashboard")
     })
   })
 })
@@ -471,10 +472,9 @@ app.post("/admin-login", (req, res) => {
 let sub_id;
 let selected_plan_id;
 let total_count_var;
-app.get("/checkout", isLoggedIn, (req, res) => {
-  User.findOne({ email: req.user.email }, (err, user) => {
-    res.render("checkout", { user: user })
-  })
+app.get("/checkout", isLoggedIn, async (req, res) => {
+  let user = await User.findOne({ email: req.user.email })
+  res.render("checkout", { user: user })
 })
 app.post("/create-checkout-session", isLoggedIn, (req, res) => {
   selected_plan_id = req.body.plan
@@ -501,29 +501,22 @@ app.post("/one-time-access", isLoggedIn, (req, res) => {
     res.json(response)
   })
 })
-app.post("/verify", (req, res) => {
-  instance.payments.fetch(req.body.razorpay_payment_id).then((paymenyDocument) => {
-    console.log(paymenyDocument)
-    if (paymenyDocument.status == "captured" || paymenyDocument.status == "authorized") {
-      // transaction successful
-      // save sub id to user database and payment id to database , and from plan id save plan name to database
-      User.findOne({ email: req.user.email }, (err, user) => {
-        if (err) console.log(err)
-        else {
-          user.subscriptionId = sub_id;
-          user.plan_id = selected_plan_id;
-          user.created_at = paymenyDocument.created_at
-          user.save(function (err, user) {
-            if (err) console.log(err)
-          })
-        }
-      })
-      res.redirect("/dashboard")
-    }
-    else {
-      res.send("Waiting for transaction to be successful")
-    }
-  })
+app.post("/verify", async (req, res) => {
+  let paymentDocument = await instance.payments.fetch(req.body.razorpay_payment_id)
+  // console.log(paymentDocument)
+  if (paymentDocument.status == "captured" || paymentDocument.status == "authorized") {
+    // transaction successful
+    // save sub id to user database and payment id to database , and from plan id save plan name to database
+    let user = await User.findOne({ email: req.user.email })
+    user.subscriptionId = sub_id;
+    user.plan_id = selected_plan_id;
+    user.created_at = paymentDocument.created_at
+    user.save()
+    res.redirect("/dashboard")
+  }
+  else {
+    res.send("Waiting for transaction to be successful")
+  }
 })
 app.get("/cancel_subscription", isLoggedIn, (req, res) => {
   User.findOne({ email: req.user.email }, (err, user) => {
