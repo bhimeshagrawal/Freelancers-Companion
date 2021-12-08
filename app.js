@@ -22,9 +22,10 @@ const cors = require("cors");
 const Razorpay = require("razorpay");
 const work = require("./models/work");
 const testimonial = require("./models/testimonial");
-const nodemailer = require("nodemailer")
 const path = require('path');
 const { off } = require("./models/user");
+const sgMail = require('@sendgrid/mail')
+
 // const YOUR_DOMAIN = "http://localhost:3000";
 const YOUR_DOMAIN = "https://pure-journey-78047.herokuapp.com";
 const buildLength = {
@@ -46,6 +47,7 @@ const plans = {
   BasicYearly: "plan_ITU7csf7WGbXYO",
   PlusYearly: "plan_ITU80Lf0xL2EeN",
 };
+sgMail.setApiKey("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")
 const instance = new Razorpay({
   key_id: "rzp_test_Au3uO8cawOO3zg",
   key_secret: "T2FCQvjSE7WbhlNQHeuT2sdU",
@@ -83,21 +85,7 @@ passport.deserializeUser(User.deserializeUser());
 app.listen(PORT, function () {
   console.log(`Server Started at port ${PORT}`);
 });
-var email, username, firstName, lastName, password;
-let transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  service: 'Gmail',
-  auth: {
-    type: 'OAuth2',
-    user: 'monkeysinghindia@gmail.com',
-    pass: 'monkey@123',
-    clientId: process.env.OAUTH_CLIENTID,
-    clientSecret: process.env.OAUTH_CLIENT_SECRET,
-    refreshToken: process.env.OAUTH_REFRESH_TOKEN
-  }
-});
+const tempdetails = { email: "", username: "", firstName: "", lastName: "", password: "", otp: "" }
 
 
 /*
@@ -241,69 +229,106 @@ app.post("/register", function (req, res) {
     res.render("register", { err: errmsg.message });
   }
   else {
-    username = req.body.username
-    firstName = req.body.firstName
-    lastName = req.body.lastName
-    email = req.body.email
-    password = req.body.password
+    tempdetails.username = req.body.username
+    tempdetails.firstName = req.body.firstName
+    tempdetails.lastName = req.body.lastName
+    tempdetails.email = req.body.email
+    tempdetails.password = req.body.password
     //generating random otp
-    var otp = Math.random();
-    otp = otp * 1000000;
-    otp = parseInt(otp);
-    console.log(otp);
-    // send mail with defined transport object
-    var mailOptions = {
-      to: req.body.email,
-      subject: "Otp for registration is: ",
-      html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + otp + "</h1>" // html body
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      console.log('Message sent: %s', info.messageId);
-      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-      res.render('otp', { err: "" });
-    });
+    tempdetails.otp = generateOTP()
+    const msg = {
+      to: req.body.email, //recipient
+      from: 'monkeysinghindia@gmail.com', // Change to your verified sender
+      subject: 'Otp for registration is: "',
+      html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + tempdetails.otp + "</h1>" // html body
+    }
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log('Email sent')
+        res.render('otpregister', { err: "" });
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 });
 app.post('/resend', function (req, res) {
-  var mailOptions = {
-    to: email,
-    subject: "Otp for registration is: ",
-    html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + otp + "</h1>" // html body
-  };
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log('Message sent: %s', info.messageId);
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    res.render('otp', { err: "otp has been sent" });
-  });
+  const msg = {
+    to: tempdetails.email, //recipient
+    from: 'monkeysinghindia@gmail.com', // Change to your verified sender
+    subject: 'Otp for registration is: "',
+    html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + tempdetails.otp + "</h1>" // html body
+  }
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log('Email sent')
+      res.render('otp', { err: "otp has been sent" });
+    })
+    .catch((error) => {
+      console.error(error)
+    })
 });
-app.post('/verify', function (req, res) {
-  if (req.body.otp == otp) {
+app.post('/verifyregister', function (req, res) {
+  if (req.body.otp == tempdetails.otp) {
     var newUser = new User({
-      username: username,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
+      username: tempdetails.username,
+      firstName: tempdetails.firstName,
+      lastName: tempdetails.lastName,
+      email: tempdetails.email,
     });
-    User.register(newUser, password, function (err, user) {
+    User.register(newUser, tempdetails.password, function (err, user) {
       if (err) {
         console.log(err);
         return res.render("register", { err: err.message });
       }
-      passport.authenticate("local")(req, res, function () {
-        res.redirect("/dashboard");
-      });
+      res.render("login")
     });
   }
   else {
-    res.render('otp', { err: 'otp is incorrect' });
+    res.render('otpregister', { err: 'otp is incorrect' });
   }
 });
+app.get("/forgotpassword", (req, res) => {
+  res.render("forgotpassword", { err: "" })
+})
+app.post("/sendotpforgotpassword", (req, res) => {
+  email = req.body.email
+  //generate random otp
+  tempdetails.otp = generateOTP();
+  // send mail with defined transport object
+  const msg = {
+    to: req.body.email, //recipient
+    from: 'monkeysinghindia@gmail.com', // Change to your verified sender
+    subject: 'Otp for registration is: "',
+    html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + tempdetails.otp + "</h1>" // html body
+  }
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log('Email sent')
+      res.render('otpforgotpassword', { err: "" });
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+})
+app.post("/verifyotpforgotpassword", (req, res) => {
+  if (req.body.otp == tempdetails.otp) {
+    res.render("changepassword")
+  }
+  else {
+    res.render("otpforgotpassword", { err: "Incorrect OTP entered" })
+  }
+})
+app.post("/changepassword", (req, res) => {
+  User.findOne({ email: tempdetails.email }, (err, user) => {
+    user.setPassword(req.body.password, function (err, user) {
+      res.send("<h3>Password has been updated</h3><p>Kindly Login Now to access Dashboard</p>")
+    })
+  })
+})
 app.get("/login", function (req, res) {
   res.render("login");
 });
@@ -569,4 +594,12 @@ function isQuarterlyOrYearlyPlan(plan_id) {
   else if (plan_id == plans.PlusYearly)
     return true;
   return false;
+}
+function generateOTP() {
+  var digits = '0123456789';
+  let OTP = '';
+  for (let i = 0; i < 4; i++) {
+    OTP += digits[Math.floor(Math.random() * 10)];
+  }
+  return OTP;
 }
