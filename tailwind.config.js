@@ -1,10 +1,13 @@
 module.exports = {
-  purge: [],
+  purge: {
+    enabled: true,
+    content: ['../../**/*.ejs'],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      fontFamily:{
-        Poppins:["Poppins","sans-serif"],
+      fontFamily: {
+        Poppins: ["Poppins", "sans-serif"],
       },
     },
   },
