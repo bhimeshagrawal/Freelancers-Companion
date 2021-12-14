@@ -68,7 +68,7 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
+app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(methodOverride("_method"));
 app.use(cookieParser("secret"));
 //PASSPORT CONFIGURATION
@@ -413,6 +413,7 @@ app.post("/create-new-blogpost", (req, res) => {
     author: req.body.author,
     title: req.body.title,
     category: req.body.category,
+    image: req.body.image,
     description: req.body.description,
     date: today,
   });
@@ -528,6 +529,12 @@ app.get("/cancel_subscription", isLoggedIn, (req, res) => {
     user.save()
     instance.subscriptions.cancel(user.subscriptionId)
     res.redirect("/dashboard")
+  })
+})
+app.get("/blog/:id", (req, res) => {
+  Blog.findOne({ _id: req.params.id }, (err, blogPost) => {
+    console.log(blogPost)
+    res.render("blogpage", { blogPost: blogPost })
   })
 })
 

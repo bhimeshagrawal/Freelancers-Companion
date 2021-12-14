@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script async src="https://kit.fontawesome.com/20970c5fb1.js" crossorigin="anonymous"></script>
+    <title>Blog - MonkeySingh</title>
+</head>
+
+<body>
+    <%- include("partials/primaryHeader.ejs") %>
+        <!-- component -->
+        <style>
+            .pt-\[25\%\] {
+                padding-top: 25%;
+            }
+
+            .pt-\[75\%\] {
+                padding-top: 75%;
+            }
+
+            .mt-\[-10\%\] {
+                margin-top: -10%;
+            }
+
+            .pt-\[56\.25\%\] {
+                padding-top: 56.25%;
+            }
+        </style>
+        <% let imageURL=blogPost.image+"?tr=w-1200,bl-6" %>
+            <main class="relative mx-auto w-full container bg-white">
+                <div class="relative -mx-4 top-0 pt-[25%] overflow-hidden">
+                    <img class="absolute inset-0 rounded-lg object-cover object-top w-full h-full filter blur"
+                        src="<%= imageURL %>" alt="" />
+                </div>
+
+                <article class="max-w-prose mx-auto py-8 px-4">
+                    <h1 class="text-5xl font-semibold">
+                        <%= blogPost.title%>
+                    </h1>
+                    <h2 class="mt-2 text-sm text-gray-500">
+                        <%= blogPost.author%>, <%= blogPost.category %>,<%=blogPost.date%>
+                    </h2>
+                    <section class="py-8">
+                        <%- blogPost.description %>
+                    </section>
+                </article>
+            </main>
+            <%- include("partials/footer.ejs") %>
+</body>
+
+</html>
