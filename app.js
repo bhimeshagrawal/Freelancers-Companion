@@ -21,9 +21,9 @@ const Work = require("./models/work");
 const cors = require("cors");
 const Razorpay = require("razorpay");
 const work = require("./models/work");
+const workCategory = require("./models/workCategory");
 const testimonial = require("./models/testimonial");
 const path = require('path');
-const { off } = require("./models/user");
 const sgMail = require('@sendgrid/mail')
 
 
@@ -97,6 +97,7 @@ ROUTES
 
 app.get("/", function (req, res) {
   Work.find({}, (err, workArray) => {
+    shuffle(workArray);
     if (err) console.log(err);
     else {
       Testimonial.find({}, (err, testimonialArray) => {
@@ -372,11 +373,11 @@ app.get("/features", (req, res) => {
   res.render("features");
 });
 app.get("/ourwork", (req, res) => {
-  res.redirect("/ourwork/all");
+  res.redirect("/ourwork/All");
 });
 app.get("/ourwork/:category", (req, res) => {
-  var category = req.params.category.toLowerCase();
-  if (category == "all") {
+  var category = req.params.category;
+  if (category == "All") {
     Work.find({}, (err, workArray) => {
       if (err) console.log(err);
       else {
@@ -602,4 +603,17 @@ function generateOTP() {
     OTP += digits[Math.floor(Math.random() * 10)];
   }
   return OTP;
+}
+function shuffle(array) {
+  let currentIndex = array.length, randomIndex;
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+  return array;
 }
