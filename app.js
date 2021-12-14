@@ -415,7 +415,7 @@ app.post("/create-new-blogpost", (req, res) => {
     category: req.body.category,
     image: req.body.image,
     description: req.body.description,
-    date: today,
+    date: req.body.date,
   });
   //save this in blog collection and redirect to all blog page
   newBlog.save((err, blog) => {
@@ -533,7 +533,6 @@ app.get("/cancel_subscription", isLoggedIn, (req, res) => {
 })
 app.get("/blog/:id", (req, res) => {
   Blog.findOne({ _id: req.params.id }, (err, blogPost) => {
-    console.log(blogPost)
     res.render("blogpage", { blogPost: blogPost })
   })
 })

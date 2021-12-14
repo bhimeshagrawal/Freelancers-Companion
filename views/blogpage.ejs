@@ -14,27 +14,14 @@
     <%- include("partials/primaryHeader.ejs") %>
         <!-- component -->
         <style>
-            .pt-\[25\%\] {
-                padding-top: 25%;
-            }
 
-            .pt-\[75\%\] {
-                padding-top: 75%;
-            }
-
-            .mt-\[-10\%\] {
-                margin-top: -10%;
-            }
-
-            .pt-\[56\.25\%\] {
-                padding-top: 56.25%;
-            }
         </style>
         <% let imageURL=blogPost.image+"?tr=w-1200,bl-6" %>
             <main class="relative mx-auto w-full container bg-white">
-                <div class="relative -mx-4 top-0 pt-[25%] overflow-hidden">
-                    <img class="absolute inset-0 rounded-lg object-cover object-top w-full h-full filter blur"
-                        src="<%= imageURL %>" alt="" />
+
+                <div class="relative h-1/2 w-auto overflow-hidden">
+                    <img class="rounded-lg mx-auto object-cover object-top filter blur" src="<%= imageURL %>" alt=""
+                        width="770px" />
                 </div>
 
                 <article class="max-w-prose mx-auto py-8 px-4">
@@ -42,7 +29,7 @@
                         <%= blogPost.title%>
                     </h1>
                     <h2 class="mt-2 text-sm text-gray-500">
-                        <%= blogPost.author%>, <%= blogPost.category %>,<%=blogPost.date%>
+                        <%= blogPost.author%>, <%= blogPost.category %>,&nbsp;<%=blogPost.date%>
                     </h2>
                     <section class="py-8">
                         <%- blogPost.description %>
