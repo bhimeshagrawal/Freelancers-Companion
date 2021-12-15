@@ -469,7 +469,7 @@ app.post("/create-new-work", (req, res) => {
   });
 });
 app.get("/admin", (req, res) => {
-  res.render("admin", { status: false });
+  res.render("admin", { status: false, WorkCategoryArray: WorkCategoryArray });
 });
 app.post("/admin-login", (req, res) => {
   var adminId = "cc1BkAATqxf52oZo2P3q";
@@ -477,7 +477,7 @@ app.post("/admin-login", (req, res) => {
   var name = req.body.name;
   var password = req.body.password;
   if (adminId == name && adminPassword == password) {
-    res.render("admin", { status: true });
+    res.render("admin", { status: true, WorkCategoryArray: WorkCategoryArray });
   } else {
     res.redirect("/admin");
   }
