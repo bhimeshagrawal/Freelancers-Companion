@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/staticcss/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
     <title>Login - MonkeySingh</title>
 </head>
 
@@ -56,6 +57,19 @@
                                     <p class="text-xs italic text-red-500 hidden blankPasswordAlert">Please fill the
                                         password.
                                     </p>
+                                </div>
+                                <div class="mb-4">
+                                    <input type="checkbox" onclick="togglePasswordVisibility()">&nbsp;Show Password
+                                    <script>
+                                        function togglePasswordVisibility() {
+                                            var x = document.getElementById("password");
+                                            if (x.type === "password") {
+                                                x.type = "text";
+                                            } else {
+                                                x.type = "password";
+                                            }
+                                        }
+                                    </script>
                                 </div>
                                 <div class="mb-6 text-center">
                                     <button

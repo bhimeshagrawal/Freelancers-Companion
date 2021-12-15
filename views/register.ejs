@@ -78,6 +78,20 @@
                                                 id="password" type="password" name="password"
                                                 placeholder="******************" />
                                         </div>
+                                        <div class="mb-4">
+                                            <input type="checkbox" onclick="togglePasswordVisibility()">&nbsp;Show
+                                            Password
+                                            <script>
+                                                function togglePasswordVisibility() {
+                                                    var x = document.getElementById("password");
+                                                    if (x.type === "password") {
+                                                        x.type = "text";
+                                                    } else {
+                                                        x.type = "password";
+                                                    }
+                                                }
+                                            </script>
+                                        </div>
                                         <div class="mb-6 text-center">
                                             <button
                                                 class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline">
