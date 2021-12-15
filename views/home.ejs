@@ -1280,12 +1280,10 @@
                     <div class="px-16 bg-white">
                         <div class="container flex flex-col items-start mx-auto lg:items-center">
                             <p
-                                class="relative flex items-start justify-start w-full text-lg font-bold tracking-wider text-purple-500 uppercase lg:justify-center lg:items-center">
+                                class="relative flex justify-center items-center w-full text-lg font-bold text-center tracking-wider text-purple-500 uppercase ">
                                 Don't just take our word for it</p>
-
-
                             <h2
-                                class="relative flex items-start justify-start w-full max-w-3xl text-5xl font-bold lg:justify-center">
+                                class="relative flex items-center w-full max-w-3xl text-5xl text-center font-bold justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                     class="absolute right-0 hidden w-12 h-12 -mt-2 -mr-16 text-gray-200 lg:inline-block"
                                     viewBox="0 0 975.036 975.036">
@@ -1297,33 +1295,56 @@
                             </h2>
                             <div class="block w-full h-0.5 max-w-lg mt-6 bg-purple-100 rounded-full"></div>
 
-                            <div class="my-6 w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="my-6 w-full flex flex-wrap gap-5 justify-center">
                                 <% testimonialArray.forEach(testimonial=> { %>
-                                    <div class="bg-white hover:bg-gray-50 shadow-xl border rounded-lg p-6">
-                                        <div class="flex lg:w-96 items-center space-x-6 mb-4">
-                                            <img class="h-20 w-20 object-cover object-center rounded-full"
-                                                src="<%= testimonial.image %>&tr=h-100%2Cw-100" alt="photo">
+                                    <% if(testimonial.image){ %>
+                                        <div class="bg-white w-96 my-5 hover:bg-gray-50 shadow-xl border rounded-lg p-6"
+                                            style="width: 400px; margin: 5px;">
+                                            <div class="flex items-center space-x-6 mb-4">
+                                                <img class="h-20 w-20 object-cover object-center rounded-full"
+                                                    src="<%= testimonial.image %>&tr=h-100%2Cw-100" alt="photo" />
+                                                <div>
+                                                    <p class="text-xl text-gray-700 font-normal mb-1">
+                                                        <%= testimonial.name %>
+                                                    </p>
+                                                    <p class="text-base text-blue-600 font-normal">
+                                                        <%= testimonial.designation %>
+                                                    </p>
+                                                </div>
+                                            </div>
                                             <div>
-                                                <p class="text-xl text-gray-700 font-normal mb-1">
-                                                    <%= testimonial.name %>
-                                                </p>
-                                                <p class="text-base text-blue-600 font-normal">
-                                                    <%= testimonial.designation %>
+                                                <p
+                                                    class="text-gray-400 leading-loose overflow-hidden font-normal text-base">
+                                                    <%= testimonial.description %>
                                                 </p>
                                             </div>
                                         </div>
-                                        <div>
-                                            <p
-                                                class="text-gray-400 leading-loose overflow-hidden font-normal text-base">
-                                                <%= testimonial.description %>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <% }); %>
+                                        <% }else{ %>
+                                            <div class="bg-white w-96 my-5 hover:bg-gray-50 shadow-xl border rounded-lg p-6"
+                                                style="width: 400px; margin: 5px;">
+                                                <div class="flex items-center space-x-6 mb-4">
+                                                    <div>
+                                                        <p class="text-xl text-gray-700 font-normal mb-1">
+                                                            <%= testimonial.name %>
+                                                        </p>
+                                                        <p class="text-base text-blue-600 font-normal">
+                                                            <%= testimonial.designation %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p
+                                                        class="text-gray-400 leading-loose overflow-hidden font-normal text-base">
+                                                        <%= testimonial.description %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <% }}); %>
                             </div>
                         </div>
                     </div>
                 </section>
+
                 <hr>
 
                 <!-- faqs-->
