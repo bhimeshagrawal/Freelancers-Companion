@@ -55,7 +55,7 @@ let WorkCategoryArray = [
   'Digital-Ads', 'Logo',
   'Newspaper-Ad', 'Packaging',
   'Promotional', 'Social-Media',
-  'T-shirt', 'Typography',
+  'T-Shirt', 'Typography',
   'Web-Design'
 ]
 sgMail.setApiKey("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")

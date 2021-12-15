@@ -6,11 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Our Work - MonkeySingh</title>
 </head>
 
 <body>
     <%- include("partials/primaryHeader.ejs") %>
+
         <!-- our work -->
         <h1 class="text-5xl mt-24 font-bold text-center">Our Work</h1>
         <div class="flex flex-col md:flex-row">
@@ -52,7 +54,7 @@
                         <a class="tabs block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                             href="/ourwork/Web-Design" id="Web-Design">Web-Design</a>
                         <a class="tabs block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                            href="/ourwork/T-shirt" id="T-shirt">T-shirt</a>
+                            href="/ourwork/T-Shirt" id="T-shirt">T-Shirt</a>
                         <a class="tabs block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                             href="/ourwork/Banner" id="Banner">Banner</a>
                         <a class="tabs block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
@@ -78,18 +80,59 @@
                             <div class="hover:border-2 hover:border-blue-700">
                                 <img src="<%= work.image %>" alt="" width="350" height="285"
                                     class="rounded-lg hover:border-2 hover:border-blue-700"
-                                    onclick="window.open('<%= work.image %>', '_blank');">
+                                    onclick="openModal('<%= work.image %>');">
                             </div>
                         </div>
                         <% }); %>
                 </div>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <button type="button" class="btn btn-info hidden btn-lg" id="openModalBtn" data-toggle="modal"
+            data-target="#myModal">Open
+            Modal</button>
+        <!-- modal  -->
+        <div class="modal fade fixed inset-0 z-10 bg-gray-50 mx-auto hidden" id="myModal" role="dialog">
+        </div>
+
         <script>
             let active = "#" + window.location.pathname.substring(9)
             $("nav a").removeClass("bg-gray-200")
             $(active).addClass("bg-gray-200")
+        </script>
+        <script>
+            var modal = document.getElementById("myModal");
+            // Get the button that opens the modal
+            var btn = document.getElementById("openModalBtn");
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("closeModalBtn")
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.classList.remove("hidden")
+            }
+            function closeModal() {
+                modal.classList.add("hidden")
+            }
+        </script>
+        <script>
+            function openModal(url) {
+                var html =
+                    `
+                 <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content mx-auto">
+                        <div class="modal-header flex justify-between">
+                            <button type="button" onclick="closeModal()" class="close text-7xl border shadow-xl rounded-full px-8 py-4" id="closeModalBtn" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body flex justify-center items-center">
+                            <img src="${url}" style="height:600px; width:auto;" class="rounded-lg mx-auto align-middle" alt="our work full size image">
+                        </div>
+                    </div>
+                </div>
+                `
+                document.getElementById('myModal').innerHTML = html;
+                document.getElementById("openModalBtn").click();
+            }
         </script>
         <%- include("partials/footer.ejs") %>
 </body>
