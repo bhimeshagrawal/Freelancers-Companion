@@ -539,7 +539,7 @@ app.get("/cancel_subscription", isLoggedIn, (req, res) => {
     user.subscriptionStatus = "cancelled"
     user.save()
     instance.subscriptions.cancel(user.subscriptionId)
-    res.redirect("/dashboard")
+    res.redirect("/")
   })
 })
 app.get("/blog/:id", (req, res) => {
