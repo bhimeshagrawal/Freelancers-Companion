@@ -353,7 +353,6 @@ app.post("/login",
     successRedirect: "/dashboard",
     failureRedirect: "/login_err",
   }),
-  function (req, res) { }
 );
 app.get("/logout", function (req, res) {
   req.logout();
@@ -545,6 +544,27 @@ app.get("/cancel_subscription", isLoggedIn, (req, res) => {
 app.get("/blog/:id", (req, res) => {
   Blog.findOne({ _id: req.params.id }, (err, blogPost) => {
     res.render("blogpage", { blogPost: blogPost })
+  })
+})
+app.get("/forgotusername", (req, res) => {
+  res.render("forgotusername")
+})
+app.post("/sendusernameforgotusername", (req, res) => {
+  User.findOne({ email: req.body.email }, (err, user) => {
+    const msg = {
+      to: req.body.email, //recipient
+      from: 'monkeysinghindia@gmail.com', // Change to your verified sender
+      subject: 'Username for Monkeysingh.com is: "',
+      html: "<h3>Username for e-mail address is </h3>" + "<h1 style='font-weight:bold;'>" + user.username + "</h1>" // html body
+    }
+    sgMail
+      .send(msg)
+      .then(() => {
+        res.redirect("/")
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   })
 })
 
