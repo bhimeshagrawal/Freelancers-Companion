@@ -21,10 +21,11 @@ const Work = require("./models/work");
 const cors = require("cors");
 const Razorpay = require("razorpay");
 const work = require("./models/work");
-const workCategory = require("./models/workCategory");
+const WorkCategory = require("./models/workCategory");
 const testimonial = require("./models/testimonial");
 const path = require('path');
-const sgMail = require('@sendgrid/mail')
+const sgMail = require('@sendgrid/mail');
+const workCategory = require("./models/workCategory");
 
 
 // const YOUR_DOMAIN = "http://localhost:3000";
@@ -48,6 +49,15 @@ const plans = {
   BasicYearly: "plan_ITU7csf7WGbXYO",
   PlusYearly: "plan_ITU80Lf0xL2EeN",
 };
+let WorkCategoryArray = [
+  'App-Development', 'Banner',
+  'Books', 'Card',
+  'Digital-Ads', 'Logo',
+  'Newspaper-Ad', 'Packaging',
+  'Promotional', 'Social-Media',
+  'T-shirt', 'Typography',
+  'Web-Design'
+]
 sgMail.setApiKey("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")
 const instance = new Razorpay({
   key_id: "rzp_test_Au3uO8cawOO3zg",
@@ -135,7 +145,7 @@ app.get("/dashboard", isLoggedIn, async function (req, res) {
       User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
         if (err) console.log(err);
         else {
-          res.render("dashboard", { user: user });
+          res.render("dashboard", { user: user, WorkCategoryArray: WorkCategoryArray });
         }
       });
     }
@@ -160,7 +170,7 @@ app.get("/dashboard", isLoggedIn, async function (req, res) {
       User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
         if (err) console.log(err);
         else {
-          res.render("dashboard", { user: user });
+          res.render("dashboard", { user: user, WorkCategoryArray: WorkCategoryArray });
         }
       });
     }
