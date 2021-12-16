@@ -132,59 +132,35 @@ app.get("/pricing", (req, res) => {
 app.get("/dashboard", isLoggedIn, async function (req, res) {
   // populating its posts and rendering dashboard
   let user = await User.findOne({ email: req.user.email })
-  // monthly plan 
-  if (isMonthlyPlan(user.plan_id) == true) {
-    let response = await instance.subscriptions.fetch(user.subscriptionId)
-    var currentTimeInSeconds = Math.floor(Date.now() / 1000);
-    // monthly active plan
-    if (response.status == "completed" && response.current_end > currentTimeInSeconds) {
-      user.end_at == response.current_end
-      user.subscriptionStatus = "active";
-      user.currentPlan = findPlanName(response.plan_id)
-      await user.save()
-      User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
-        if (err) console.log(err);
-        else {
-          res.render("dashboard", { user: user, WorkCategoryArray: WorkCategoryArray });
-        }
-      });
-    }
-    //monthly inactive plan
-    else {
-      user.subscriptionStatus = "expired";
-      user.currentPlan = "";
-      await user.save()
-      res.render("pricing", { plans: plans })
-    }
+  if (!user.subscriptionId) {
+    res.render("pricing", { plans: plans })
   }
-  //quarterly or yearly plan
-  else if (isQuarterlyOrYearlyPlan(user.plan_id) == true) {
+  else {
     let response = await instance.subscriptions.fetch(user.subscriptionId)
-    //active plan
-    if (response.plan_id == user.plan_id && response.status == "active") {
-      user.currentPlan = findPlanName(user.plan_id)
-      user.customerId = response.customer_id
-      user.subscriptionStatus = response.status
-      await user.save()
-      // check completion date and render accordingly
+    var currentTimeInUnix = Math.floor(Date.now() / 1000);
+    // next renew date current end
+    // valid till response.end_at + response.current_end - response.current_start
+    user.current_end = response.current_end
+    user.validTill = response.end_at + response.current_end - response.current_start;
+    user.subscriptionStatus = "active";
+    user.currentPlan = findPlanName(response.plan_id)
+    await user.save()
+    // active subscription
+    if (user.current_end > currentTimeInUnix) {
       User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
         if (err) console.log(err);
         else {
-          res.render("dashboard", { user: user, WorkCategoryArray: WorkCategoryArray });
+          res.render("dashboard", { user: user, WorkCategoryArray: WorkCategoryArray, current_end: unixToDate(user.current_end), validTill: unixToDate(user.validTill) });
         }
       });
     }
-    //inactive
+    // expired subscription
     else {
       user.currentPlan = "";
       user.subscriptionStatus = "expired"
       await user.save()
       res.render("pricing", { plans: plans })
     }
-  }
-  //no plan
-  else {
-    res.render("pricing", { plans: plans })
   }
 });
 app.post("/project", isLoggedIn, function (req, res) {
@@ -510,12 +486,13 @@ app.post("/one-time-access", isLoggedIn, (req, res) => {
     subscriptionObj = response
     console.log(response)
     sub_id = response.id;
+    console.log(response)
     res.json(response)
   })
 })
 app.post("/verify", async (req, res) => {
   let paymentDocument = await instance.payments.fetch(req.body.razorpay_payment_id)
-  // console.log(paymentDocument)
+  console.log(paymentDocument)
   if (paymentDocument.status == "captured" || paymentDocument.status == "authorized") {
     // transaction successful
     // save sub id to user database and payment id to database , and from plan id save plan name to database
@@ -535,6 +512,8 @@ app.get("/cancel_subscription", isLoggedIn, (req, res) => {
     user.subscriptionId = "";
     user.plan_id = "";
     user.currentPlan = "";
+    user.current_end = "";
+    user.validTill = "";
     user.subscriptionStatus = "cancelled"
     user.save()
     instance.subscriptions.cancel(user.subscriptionId)
@@ -646,4 +625,10 @@ function shuffle(array) {
       array[randomIndex], array[currentIndex]];
   }
   return array;
+}
+function unixToDate(unix) {
+  let unixMilliSeconds = unix * 1000;
+  let dateObject = new Date(unixMilliSeconds)
+  let humanDateFormat = dateObject.toLocaleDateString()
+  return humanDateFormat;
 }

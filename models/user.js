@@ -15,6 +15,8 @@ var UserSchema = new mongoose.Schema({
   end_at: Number,
   plan_id: String,
   currentPlan: String,
+  current_end: String,
+  validTill: String,
   paymentId: String,
   projects: [
     {

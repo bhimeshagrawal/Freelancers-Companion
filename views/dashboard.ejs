@@ -114,30 +114,31 @@
         </section>
 
         <!-- myaccount system  -->
-        <section class="w-full lg:w-1/4 border-gray-50 border" id="myaccount">
+        <section class="w-full lg:w-1/4 border-gray-50 mx-auto border" id="myaccount">
             <h1 class="mx-12 mt-12 mb-8 text-3xl font-semibold text-center text-blue-600">My Account</h1>
-            <div class="p-2 m-2 flex flex-col">
+            <div class="p-2 m-2 flex flex-col items-center justify-center mx-auto">
                 <div class="mb-4">
                     <p class="text ml-5 block">Username: </p>
                     <input type="text" readonly name="" id="" value="<%= user.username %>"
-                        class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+                        class="py-2 px-6 my-2 rounded-md border block w-72  bg-gray-50 text-sm">
                 </div>
                 <div class="mb-4">
                     <p class="text ml-5 block">Email: </p>
                     <input type="text" readonly name="" id="" value="<%= user.email%>"
-                        class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+                        class="py-2 px-6 my-2 rounded-md border block w-72  bg-gray-50 text-sm">
                 </div>
                 <div class="mb-4">
                     <p class="text ml-5 block">Full Name: </p>
                     <input type="text" readonly name="" id="" value="<%= user.firstName %> &nbsp; <%= user.lastName %>"
-                        class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+                        class="py-2 px-6 my-2 rounded-md border block w-72  bg-gray-50 text-sm">
                 </div>
                 <div class="mb-4">
                     <p class="text ml-5 block">Your current Plan: </p>
                     <% if(!user.currentPlan){ %>
                         <input type="text" readonly name="" id="" value="Please subscribe to a plan"
-                            class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+                            class="py-2 px-6 my-2 rounded-md border block w-72  bg-gray-50 text-sm">
                 </div>
+
                 <div class="mb-4 ml-5">
                     <p class="text block">Click below button to subscribe a plan</p>
                     <a href="/pricing" id=""
@@ -147,7 +148,24 @@
                 </div>
                 <% } else { %>
                     <input type="text" readonly name="" id="" value="<%= user.currentPlan %>"
-                        class="py-2 px-6 my-2 rounded-md border block w-72 mx-auto bg-gray-50 text-sm">
+                        class="py-2 px-6 my-2 rounded-md border block w-72 bg-gray-50 text-sm">
+            </div>
+            <!-- <div class="mb-4">
+                <p class="text ml-5 block">We will automatically charge your payment payment for upcoming billing
+                    cycle, Howerver if you wish to manually pay yourself before the cycle start. You can use this
+                    URL </p>
+                <input type="text" readonly name="" id="" value="<%=// response.short_url %>"
+                    class="py-2 px-6 my-2 rounded-md border block w-72  bg-gray-50 text-sm">
+            </div> -->
+            <div class="mb-4">
+                <p class="text ml-5 block">Current Billing Ends At: </p>
+                <input type="text" readonly name="" id="" value="<%= current_end %>"
+                    class="py-2 px-6 my-2 rounded-md border block w-72  bg-gray-50 text-sm">
+            </div>
+            <div class="mb-4">
+                <p class="text ml-5 block">Subscripiton valid till: </p>
+                <input type="text" readonly name="" id="" value="<%= validTill %>"
+                    class="py-2 px-6 my-2 rounded-md border block w-72  bg-gray-50 text-sm">
             </div>
             <hr>
             <div class="mb-4 mt-2">
@@ -229,6 +247,7 @@
         </div>
     </div>
 
+    <!-- cancel subscription modal -->
     <div id="cancelSubModal" class="fixed hidden z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
         role="dialog" aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -298,7 +317,7 @@
             }
         }
     </script>
-
+    <!-- unix to date convertor function  -->
 </body>
 
 </html>
