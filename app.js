@@ -146,7 +146,7 @@ app.get("/dashboard", isLoggedIn, async function (req, res) {
     user.currentPlan = findPlanName(response.plan_id)
     await user.save()
     // active subscription
-    if (user.current_end > currentTimeInUnix) {
+    if (user.current_end > currentTimeInUnix && (response.status == "active" || response.status == "completed")) {
       User.findOne({ email: req.user.email }).populate("projects").exec(function (err, user) {
         if (err) console.log(err);
         else {
