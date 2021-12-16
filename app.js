@@ -181,6 +181,7 @@ app.post("/project", isLoggedIn, function (req, res) {
           state: "pending",
           date: today,
           url: "",
+          user: user.username
         },
         function (err, project) {
           User.findOne({ email: req.user.email }, function (err, foundUser) {
