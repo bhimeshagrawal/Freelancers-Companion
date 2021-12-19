@@ -16,7 +16,8 @@
     <%- include("partials/primaryHeader.ejs") %>
 
         <!-- Hero -->
-        <section class="px-2 py-32 bg-white md:px-0">
+        <div class="py-10 hidden md:block"></div>
+        <section class="px-2 py-32 bg-white md:px-0" style="padding-top:50px">
             <div class="container my-12 items-center max-w-6xl px-8 mx-auto xl:px-5">
                 <div class="flex my-12 flex-wrap items-center sm:-mx-3">
                     <div class="w-full py-24 text-center md:text-left md:w-1/2 md:px-3">
@@ -1234,8 +1235,8 @@
                         class="flex py-12 flex-row gap-6 image-gallery  overflow-scroll flex-nowrap transition-500 image-gallery">
                         <% workArray.forEach( work=> { %>
                             <!-- card -->
-                            <div class="relative card-body shadow-xl bottom-0"
-                                style="min-height: 250px; min-width: 300px;">
+                            <div class="relative card-body bottom-0"
+                                style="min-height: 250px; min-width: 300px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                 <img class="rounded-md card-image" src="<%= work.image %>" alt="" />
                                 <button
                                     class="px-6 card-text py-3 absolute top-4 border-2 shadow-xl bg-white rounded-md left-4">
