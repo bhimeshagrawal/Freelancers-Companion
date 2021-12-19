@@ -11,15 +11,15 @@
     <title>Home - MonkeySingh</title>
 </head>
 
-<body class="font-Poppins">
+<body class="">
 
     <%- include("partials/primaryHeader.ejs") %>
 
         <!-- Hero -->
         <section class="px-2 py-32 bg-white md:px-0">
-            <div class="container items-center max-w-6xl px-8 mx-auto xl:px-5">
-                <div class="flex flex-wrap items-center sm:-mx-3">
-                    <div class="w-full text-center md:text-left md:w-1/2 md:px-3">
+            <div class="container my-12 items-center max-w-6xl px-8 mx-auto xl:px-5">
+                <div class="flex my-12 flex-wrap items-center sm:-mx-3">
+                    <div class="w-full py-24 text-center md:text-left md:w-1/2 md:px-3">
                         <div
                             class="w-full pb-6 space-y-6 sm:max-w-md lg:max-w-lg md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0">
                             <h1
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full md:w-1/2">
+                    <div class="w-full py-24 md:w-1/2">
                         <div class="w-full h-auto overflow-hidden rounded-md sm:rounded-xl">
                             <img src="https://ik.imagekit.io/gzmznzzqlrz/HeroImage/568x380_YBDAn__chL.jpeg?updatedAt=1639501426256"
                                 alt="Monkeysingh">
@@ -1234,7 +1234,8 @@
                         class="flex py-12 flex-row gap-6 image-gallery  overflow-scroll flex-nowrap transition-500 image-gallery">
                         <% workArray.forEach( work=> { %>
                             <!-- card -->
-                            <div class="relative card-body bottom-0" style="min-height: 250px; min-width: 300px;">
+                            <div class="relative card-body shadow-xl bottom-0"
+                                style="min-height: 250px; min-width: 300px;">
                                 <img class="rounded-md card-image" src="<%= work.image %>" alt="" />
                                 <button
                                     class="px-6 card-text py-3 absolute top-4 border-2 shadow-xl bg-white rounded-md left-4">

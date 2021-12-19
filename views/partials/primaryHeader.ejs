@@ -13,10 +13,10 @@
 		}
 	}
 </style>
-<div class="sticky shadow-md top-0 border-b-2" style="z-index: 1000;">
+<div class="sticky shadow top-0 border-b-2" style="z-index: 1000;">
 	<div class="antialiased bg-gray-100 dark-mode:bg-gray-900">
 		<div class="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800">
-			<div x-data="{ open: true }"
+			<div x-data="{ open: false }"
 				class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
 				<div class="flex flex-row items-center justify-between p-4">
 					<a href="/"
@@ -34,17 +34,17 @@
 				</div>
 				<nav :class="{'flex': open, 'hidden': !open}"
 					class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end subnav md:flex-row">
-					<a class="px-4 py-2 my-2 text-xl tracking-tight font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+					<a class="px-4 py-2 my-2 leading-6  font-medium bg-transparent rounded-lg focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
 						href="/">Home</a>
-					<a class="px-4 py-2 my-2 text-xl tracking-tight font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+					<a class="px-4 py-2 my-2 leading-6 font-medium bg-transparent rounded-lg  focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
 						href="/features">Features</a>
-					<a class="px-4 py-2 my-2 text-xl tracking-tight font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+					<a class="px-4 py-2 my-2 leading-6 font-medium bg-transparent rounded-lg  focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
 						href="/ourwork">Our Work</a>
-					<a class="px-4 py-2 my-2 text-xl tracking-tight font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+					<a class="px-4 py-2 my-2 leading-6 font-medium bg-transparent rounded-lg  focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
 						href="/howitworks">How it Works</a>
-					<a class="px-4 py-2 mx-4 my-2 text-xl tracking-tight border font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+					<a class="px-4 py-2 mx-4 my-2 leading-6 border font-medium bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
 						href="/register">Sign up</a>
-					<a class="px-4 py-2 my-2 mx-4 text-xl tracking-tight border font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 text-white bg-blue-600 hover:bg-blue-500 focus:bg-blue-500 focus:outline-none focus:shadow-blue-700"
+					<a class="px-4 py-2 my-2 mx-4 leading-6 border font-medium bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 text-white bg-blue-600 hover:bg-blue-500 focus:bg-blue-500 focus:outline-none focus:shadow-blue-700"
 						href="/dashboard">Dashboard</a>
 				</nav>
 			</div>

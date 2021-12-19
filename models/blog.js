@@ -7,6 +7,7 @@ var BlogSchema = new mongoose.Schema({
   description: String,
   date: String,
   image: String,
+  urlString: String,
 });
 
 module.exports = mongoose.model("Blog", BlogSchema);
