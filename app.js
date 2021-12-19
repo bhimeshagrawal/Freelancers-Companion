@@ -9,7 +9,6 @@ const app = express();
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const mongoose = require("mongoose");
-const fetch = require("node-fetch");
 const cookieParser = require("cookie-parser");
 const LocalStrategy = require("passport-local");
 const methodOverride = require("method-override");
@@ -21,23 +20,14 @@ const Testimonial = require("./models/testimonial");
 const Work = require("./models/work");
 const cors = require("cors");
 const Razorpay = require("razorpay");
-const work = require("./models/work");
 const WorkCategory = require("./models/workCategory");
-const testimonial = require("./models/testimonial");
 const path = require('path');
 const sgMail = require('@sendgrid/mail');
-const workCategory = require("./models/workCategory");
 const { Attachment } = require("@sendgrid/helpers/classes");
-const blog = require("./models/blog");
 
 
 // const YOUR_DOMAIN = "http://localhost:3000";
 const YOUR_DOMAIN = "https://pure-journey-78047.herokuapp.com";
-const buildLength = {
-  starter: 2,
-  basic: 6,
-  plus: 25,
-};
 const plans = {
   // monthly
   StarterMonthly: "plan_ITGnZNHqShAfec",
@@ -635,17 +625,4 @@ function unixToDate(unix) {
   let humanDateFormat = dateObject.toLocaleDateString()
   return humanDateFormat;
 }
-function updateDetailsInMongo() {
-  Blog.find({}, (err, blogArr) => {
-    blogArr.forEach((blog) => {
-      var myquery = { _id: blog._id };
-      var newvalues = { $set: { description: blog.description.slice(0, -5) } };
-      Blog.updateOne(myquery, newvalues, function (err, res) {
-        console.log(res)
-      })
-    })
-    console.log("all done")
-  })
-}
-// updateDetailsInMongo()
 
