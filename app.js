@@ -24,23 +24,21 @@ const WorkCategory = require("./models/workCategory");
 const path = require('path');
 const sgMail = require('@sendgrid/mail');
 const { Attachment } = require("@sendgrid/helpers/classes");
-
-
-// const YOUR_DOMAIN = "http://localhost:3000";
-const YOUR_DOMAIN = "https://pure-journey-78047.herokuapp.com";
+require('dotenv').config()
+const YOUR_DOMAIN = "https://wwww.monkeysingh.com";
 const plans = {
   // monthly
-  StarterMonthly: "plan_ITGnZNHqShAfec",
-  BasicMonthly: "plan_ITU4eRr10hr62z",
-  PlusMonthly: "plan_ITU5EL6SQb33D2",
+  StarterMonthly: process.env.RZP_PLAN_STARTER_MONTHLY,
+  BasicMonthly: process.env.RZP_PLAN_BASIC_MONTHLY,
+  PlusMonthly: process.env.RZP_PLAN_PLUS_MONTHLY,
   // quarterly
-  StarterQuarterly: "plan_ITU5jZfefJduhR",
-  BasicQuarterly: "plan_ITU6HUYMWT66Rd",
-  PlusQuarterly: "plan_ITU6gaxHk3oi6z",
+  StarterQuarterly: process.env.RZP_PLAN_STARTER_QUARTERLY,
+  BasicQuarterly: process.env.RZP_PLAN_BASIC_QUARTERLY,
+  PlusQuarterly: process.env.RZP_PLAN_PLUS_QUARTERLY,
   // yearly
-  StarterYearly: "plan_ITU7CzDGB32wve",
-  BasicYearly: "plan_ITU7csf7WGbXYO",
-  PlusYearly: "plan_ITU80Lf0xL2EeN",
+  StarterYearly: process.env.RZP_PLAN_STARTER_YEARLY,
+  BasicYearly: process.env.RZP_PLAN_BASIC_YEARLY,
+  PlusYearly: process.env.RZP_PLAN_PLUS_YEARLY,
 };
 let WorkCategoryArray = [
   'App-Development', 'Banner',
@@ -51,10 +49,10 @@ let WorkCategoryArray = [
   'T-Shirt', 'Typography',
   'Web-Design'
 ]
-sgMail.setApiKey("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")
+sgMail.setApiKey(process.env.TWILIO_API_KEY)
 const instance = new Razorpay({
-  key_id: "rzp_test_Au3uO8cawOO3zg",
-  key_secret: "T2FCQvjSE7WbhlNQHeuT2sdU",
+  key_id: process.env.RZP_KEY_ID,
+  key_secret: process.env.RZP_KEY_SECRET,
 });
 /*
 ==========================================
@@ -62,7 +60,7 @@ CONFIGURATIONS
 ==========================================
 */
 const PORT = process.env.PORT || 3000;
-mongoose.connect("mongodb+srv://monkeysingh:monkeysingh@monkeysingh.6arno.mongodb.net/monkeysingh?retryWrites=true&w=majority", (err) => {
+mongoose.connect(process.env.MONGO_CONN_STRING, (err) => {
   if (err) console.log(err);
   else console.log("connected");
 }

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/style.css">
     <script async src="https://kit.fontawesome.com/20970c5fb1.js" crossorigin="anonymous"></script>
-    <title>Blog - MonkeySingh</title>
+    <title>Blog - Monkeysingh</title>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
                 <div class="card border rounded-lg flex flex-col justify-center cursor-pointer border-b-8 shadow-xl border-b-white hover:border-b-8 hover:border-gray-600 relative"
                     onclick="location.href='/blogs/<%= blog._id %>';">
                     <!-- image  -->
-                    <div class="bg-cover rounded-t-lg max-h-80 h-64" style="background-image: url(<%= blog.image %>);">
+                    <div class="bg-cover rounded-t-lg max-h-80 h-64" style="background-image: url(<%=blog.image%>);">
                         <!-- <img class="rounded-t-lg overflow-hidden h-auto w-auto max-w-full" src="" alt="" /> -->
                     </div>
                     <!-- content  -->
