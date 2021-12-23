@@ -116,7 +116,7 @@ app.get("/", function (req, res) {
     }
   });
 });
-app.get("/howitworks", (req, res) => {
+app.get("/how-it-works", (req, res) => {
   res.render("howitworks");
 });
 app.get("/pricing", (req, res) => {
@@ -328,7 +328,7 @@ app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 });
-app.get("/contactus", (req, res) => {
+app.get("/contact-us", (req, res) => {
   res.render("contactus", { isQuerySubmitted: false });
 });
 app.post("/contactus", (req, res) => {
@@ -351,10 +351,10 @@ app.post("/contactus", (req, res) => {
 app.get("/features", (req, res) => {
   res.render("features");
 });
-app.get("/ourwork", (req, res) => {
-  res.redirect("/ourwork/All");
+app.get("/our-work", (req, res) => {
+  res.redirect("/our-work/All");
 });
-app.get("/ourwork/:category", (req, res) => {
+app.get("/our-work/:category", (req, res) => {
   var category = req.params.category;
   if (category == "All") {
     Work.find({}, (err, workArray) => {
@@ -372,7 +372,7 @@ app.get("/ourwork/:category", (req, res) => {
     });
   }
 });
-app.get("/blog", (req, res) => {
+app.get("/blogs", (req, res) => {
   //find all blogs , make array and render all blogs
   Blog.find({}, (err, blogPostArray) => {
     if (err) console.log(err);
@@ -514,10 +514,13 @@ app.get("/cancel_subscription", isLoggedIn, (req, res) => {
     res.redirect("/")
   })
 })
-app.get("/blog/:id", (req, res) => {
+app.get("/blogs/:id", (req, res) => {
   Blog.findOne({ _id: req.params.id }, (err, blogPost) => {
     res.render("blogpage", { blogPost: blogPost })
   })
+})
+app.get("/about-us", (req, res) => {
+  res.render("aboutus")
 })
 app.get("/forgotusername", (req, res) => {
   res.render("forgotusername")
