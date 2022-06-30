@@ -2,49 +2,48 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <script async src="https://kit.fontawesome.com/20970c5fb1.js" crossorigin="anonymous"></script>
-    <title>Blog - Monkeysingh</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script async src="https://kit.fontawesome.com/20970c5fb1.js" crossorigin="anonymous"></script>
+  <title>Blog</title>
 </head>
 
 <body>
-    <%- include("partials/primaryHeader.ejs") %>
-        <!-- blog -->
-        <h1 class="text-6xl mt-12 font-bold text-center">Blog</h1>
-        <!-- blog post  -->
-        <div class=" grid gap-12 m-12 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-            <!-- card  -->
-            <% blogPostArray.forEach(blog=> { %>
-                <div class="card border rounded-lg flex flex-col justify-center cursor-pointer border-b-8 shadow-xl border-b-white hover:border-b-8 hover:border-gray-600 relative"
-                    onclick="location.href='/blogs/<%= blog._id %>';">
-                    <!-- image  -->
-                    <div class="bg-cover rounded-t-lg max-h-80 h-64" style="background-image: url(<%=blog.image%>);">
-                        <!-- <img class="rounded-t-lg overflow-hidden h-auto w-auto max-w-full" src="" alt="" /> -->
-                    </div>
-                    <!-- content  -->
-                    <div class="mx-4 max-w-full w-auto bg-white  border shadow relative -top-16 rounded-lg">
-                        <div class="flex flex-col justify-center p-8 rounded-lg">
-                            <div class=" mb-4 text-xl font-semibold ">
-                                <%= blog.title %>
-                            </div>
-                            <hr>
-                            <div class="my-2 font-light text-lg"><i class="far fa-calendar"></i>
-                                <%= blog.date %>
-                            </div>
-                            <hr>
-                            <div class="flex my-4 flex-row justify-between">
-                                <div class="font-semibold text-lg">Read More</div>
-                                <div class="text-blue-600"><i class="fas fa-arrow-circle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <% }) %>
+  <%- include("partials/primaryHeader.ejs") %>
+  <!-- blog -->
+  <h1 class="text-6xl mt-12 font-bold text-center">Blog</h1>
+  <!-- blog post  -->
+  <div class=" grid gap-12 m-12 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    <!-- card  -->
+    <% blogPostArray.forEach(blog=> { %>
+    <div class="card border rounded-lg flex flex-col justify-center cursor-pointer border-b-8 shadow-xl border-b-white hover:border-b-8 hover:border-gray-600 relative" onclick="location.href='/blogs/<%= blog._id %>';">
+      <!-- image  -->
+      <div class="bg-cover rounded-t-lg max-h-80 h-64" style="background-image: url(<%=blog.image%>);">
+        <!-- <img class="rounded-t-lg overflow-hidden h-auto w-auto max-w-full" src="" alt="" /> -->
+      </div>
+      <!-- content  -->
+      <div class="mx-4 max-w-full w-auto bg-white  border shadow relative -top-16 rounded-lg">
+        <div class="flex flex-col justify-center p-8 rounded-lg">
+          <div class=" mb-4 text-xl font-semibold ">
+            <%= blog.title %>
+          </div>
+          <hr>
+          <div class="my-2 font-light text-lg"><i class="far fa-calendar"></i>
+            <%= blog.date %>
+          </div>
+          <hr>
+          <div class="flex my-4 flex-row justify-between">
+            <div class="font-semibold text-lg">Read More</div>
+            <div class="text-blue-600"><i class="fas fa-arrow-circle-right"></i></div>
+          </div>
         </div>
-        <%- include("partials/footer.ejs") %>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <%- include("partials/footer.ejs") %>
 
 </body>
 

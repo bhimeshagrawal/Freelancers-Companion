@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/style.css">
 
-    <title>Login - Monkeysingh</title>
+    <title>Login</title>
 </head>
 
 <body class="">
@@ -32,7 +32,7 @@
                             </div>
                             <hr class="mb-3 border-t" />
                             <h3 class="pt-4 text-2xl text-center">Login your Account!</h3>
-                            <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded" action="/login" method="post"
+                            <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded" action="/user/login" method="post"
                                 name="loginForm" onsubmit="return validateLoginForm()">
                                 <div class="mb-4">
                                     <label class="block mb-2 text-sm font-bold text-gray-700" for="username">
@@ -80,19 +80,19 @@
                                 <hr class="mb-6 border-t" />
                                 <div class="text-center">
                                     <a class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                                        href="/forgotpassword">
+                                        href="/user/forgotpassword">
                                         Forgot Password?
                                     </a>
                                 </div>
                                 <div class="text-center">
                                     <a class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                                        href="/forgotusername">
+                                        href="/user/forgotusername">
                                         Forgot Username?
                                     </a>
                                 </div>
                                 <div class="text-center my-4">
                                     <a class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                                        href="/register">
+                                        href="/user/register">
                                         Create a new account? Register!
                                     </a>
                                 </div>

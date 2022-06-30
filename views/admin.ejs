@@ -2,127 +2,103 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <title>Admin - Monkeysingh</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <title>Admin</title>
 </head>
 
 <body>
 
-    <% if(status==true){ %>
-        <section class="flex flex-wrap justify-around gap-8 p-4">
-            <!-- add new testimonial  -->
-            <div class="flex flex-wrap items-center justify-around h-screen">
-                <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
-                    <div class=" mt-10">
-                        <h1 class="font-bold text-4xl">Add Testimonial</h1>
-                        <p class="font-semibold">Paste the content and submit</p>
-                    </div>
-                    <form action="/create-new-testimonial" method="post" class="flex flex-col space-y-8 mt-10">
-                        <input type="text" placeholder="Name" name="name"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Designation" name="designation"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Image" name="image"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Description" name="description"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <button
-                            class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
-                    </form>
-                </div>
-            </div>
+  <% if(isAdminLoggedIn==true){ %>
+  <section class="flex flex-wrap justify-around gap-8 p-4">
+    <!-- add new testimonial  -->
+    <div class="flex flex-wrap items-center justify-around h-screen">
+      <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
+        <div class=" mt-10">
+          <h1 class="font-bold text-4xl">Add Testimonial</h1>
+          <p class="font-semibold">Paste the content and submit</p>
+        </div>
+        <form action="/admin/testimonial" method="post" class="flex flex-col space-y-8 mt-10">
+          <input type="text" placeholder="Name" name="name" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <input type="text" placeholder="Designation" name="designation" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <input type="text" placeholder="Image" name="image" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <input type="text" placeholder="Description" name="description" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <button class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
+        </form>
+      </div>
+    </div>
 
-            <!-- add new blog  -->
-            <div class="flex flex-wrap items-center justify-around h-screen">
-                <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
-                    <div class=" mt-10">
-                        <h1 class="font-bold text-4xl">Add Blog</h1>
-                        <p class="font-semibold">Paste the content and submit</p>
-                    </div>
-                    <form action="/create-new-blogpost" method="post" class="flex flex-col space-y-8 mt-10">
-                        <input type="text" placeholder="Title" name="title"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Category" name="category"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Author" name="author"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Image" name="image"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Date" name="date"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Description" name="description"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <button
-                            class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
-                    </form>
-                </div>
-            </div>
+    <!-- add new blog  -->
+    <div class="flex flex-wrap items-center justify-around h-screen">
+      <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
+        <div class=" mt-10">
+          <h1 class="font-bold text-4xl">Add Blog</h1>
+          <p class="font-semibold">Paste the content and submit</p>
+        </div>
+        <form action="/admin/blog" method="post" class="flex flex-col space-y-8 mt-10">
+          <input type="text" placeholder="Title" name="title" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <input type="text" placeholder="Category" name="category" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <input type="text" placeholder="Author" name="author" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <input type="text" placeholder="Image" name="image" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <input type="text" placeholder="Date" name="date" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <input type="text" placeholder="Description" name="description" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <button class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
+        </form>
+      </div>
+    </div>
 
-            <!-- add new portfolio work  -->
-            <div class="flex flex-wrap items-center justify-around h-screen">
-                <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
-                    <div class=" mt-10">
-                        <h1 class="font-bold text-4xl">Add Portfolio Work</h1>
-                        <p class="font-semibold">Paste the content and submit</p>
-                    </div>
-                    <form action="/create-new-work" method="post" class="flex flex-col space-y-8 mt-10">
-                        <input type="text" placeholder="Title" name="name"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="text" placeholder="Image" name="image"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <div>
-                            <div class="relative inline-block w-full text-gray-700">
-                                <label class="block text-gray-700 text-sm font-bold mb-2" for="projectTitle">
-                                    Category
-                                </label>
-                                <select name="category" id="category" form="createNewProject"
-                                    class="w-full h-10 align-middle pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
-                                    placeholder="Regular input">
-                                    <% WorkCategoryArray.forEach((categoryValue)=>{ %>
-                                        <option value="<%= categoryValue %>">
-                                            <%= categoryValue %>
-                                        </option>
-                                        <% }) %>
-                                </select>
-                                <div
-                                    class="absolute top-12 inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                        <path
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd" fill-rule="evenodd"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="text" placeholder="description" name="description"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <button
-                            class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
-                    </form>
-                </div>
+    <!-- add new portfolio work  -->
+    <div class="flex flex-wrap items-center justify-around h-screen">
+      <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
+        <div class=" mt-10">
+          <h1 class="font-bold text-4xl">Add Portfolio Work</h1>
+          <p class="font-semibold">Paste the content and submit</p>
+        </div>
+        <form action="/admin/work" method="post" class="flex flex-col space-y-8 mt-10">
+          <input type="text" placeholder="Title" name="name" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <input type="text" placeholder="Image" name="image" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <div>
+            <div class="relative inline-block w-full text-gray-700">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="projectTitle">
+                Category
+              </label>
+              <select name="category" id="category" form="createNewProject" class="w-full h-10 align-middle pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline" placeholder="Regular input">
+                <% WorkCategoryArray.forEach((categoryValue)=>{ %>
+                <option value="<%= categoryValue %>">
+                  <%= categoryValue %>
+                </option>
+                <% }) %>
+              </select>
+              <div class="absolute top-12 inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                  <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                </svg>
+              </div>
             </div>
-        </section>
-        <% }else{ %>
-            <div class="flex flex-wrap items-center justify-around h-screen">
-                <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
-                    <div class=" mt-10">
-                        <h1 class="font-bold text-4xl">Login Admin</h1>
-                        <p class="font-semibold">Enter username and pass</p>
-                    </div>
-                    <form action="/admin-login" method="post" class="flex flex-col space-y-8 mt-10">
-                        <input type="text" placeholder="Username" name="name"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <input type="password" placeholder="Password" name="password"
-                            class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
-                        <button
-                            class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
-                    </form>
-                </div>
-            </div>
-            <%} %>
+          </div>
+          <input type="text" placeholder="description" name="description" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+          <button class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  <% }else{ %>
+  <div class="flex flex-wrap items-center justify-around h-screen">
+    <div class=" flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
+      <div class=" mt-10">
+        <h1 class="font-bold text-4xl">Login Admin</h1>
+        <p class="font-semibold">Enter username and pass</p>
+      </div>
+      <form action="/admin" method="post" class="flex flex-col space-y-8 mt-10">
+        <input type="text" placeholder="Username" name="name" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+        <input type="password" placeholder="Password" name="password" class="border rounded-lg py-3 px-3 bg-gray-100 border-gray-700 placeholder-gray-500">
+        <input class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold" type="submit" placeholder="Submit">
+      </form>
+    </div>
+  </div>
+  <% } %>
 </body>
 
 </html>

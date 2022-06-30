@@ -2,41 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <script async src="https://kit.fontawesome.com/20970c5fb1.js" crossorigin="anonymous"></script>
-    <title>Blog - Monkeysingh</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script async src="https://kit.fontawesome.com/20970c5fb1.js" crossorigin="anonymous"></script>
+  <title>Blog</title>
 </head>
 
 <body>
-    <%- include("partials/primaryHeader.ejs") %>
-        <!-- component -->
-        <style>
+  <%- include("partials/primaryHeader.ejs") %>
+  <!-- component -->
+  <style>
 
-        </style>
-        <% let imageURL=blogPost.image+"?tr=w-1200,bl-6" %>
-            <main class="relative mx-auto w-full container bg-white">
+  </style>
+  <% let imageURL=blogPost.image+"?tr=w-1200,bl-6" %>
+  <main class="relative mx-auto w-full container bg-white">
 
-                <div class="relative h-1/2 w-auto overflow-hidden">
-                    <img class="rounded-lg mx-auto object-cover object-top filter blur" src="<%= imageURL %>" alt=""
-                        width="770px" />
-                </div>
+    <div class="relative h-1/2 w-auto overflow-hidden">
+      <img class="rounded-lg mx-auto object-cover object-top filter blur" src="<%= imageURL %>" alt="" width="770px" />
+    </div>
 
-                <article class="max-w-prose mx-auto py-8 px-4">
-                    <h1 class="text-5xl font-semibold">
-                        <%= blogPost.title%>
-                    </h1>
-                    <h2 class="mt-2 text-sm text-gray-500">
-                        <%=blogPost.date%>
-                    </h2>
-                    <section class="py-8">
-                        <%- blogPost.description %>
-                    </section>
-                </article>
-            </main>
-            <%- include("partials/footer.ejs") %>
+    <article class="max-w-prose mx-auto py-8 px-4">
+      <h1 class="text-5xl font-semibold">
+        <%= blogPost.title%>
+      </h1>
+      <h2 class="mt-2 text-sm text-gray-500">
+        <%=blogPost.date%>
+      </h2>
+      <section class="py-8">
+        <%- blogPost.description %>
+      </section>
+    </article>
+  </main>
+  <%- include("partials/footer.ejs") %>
 </body>
 
 </html>
